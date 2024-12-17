@@ -1,0 +1,3064 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Counter</title>
+            <!-- build:css css/bundle.css -->
+        <link rel="stylesheet" href="css/main.css?t=1721298661346" />
+        <!-- endbuild -->
+
+</head>
+
+<!-- Imported partials -->
+
+
+
+
+<body>
+
+    <div id="ticketDisplay" style="height: 100%;width: 100%;position:absolute;top:0;left:0;z-index: 101;display: none;background-color: #0000007F;align-items: center;vertical-align: middle;transition-duration:3s;transition-property: display ;" onclick="this.style.display='none';">
+        <div style="height:30%;width: 30%;background-color: white;border-radius: 30px;text-align: center;vertical-align: middle;align-items: center;margin-top:18%;margin-left: 35%;display: flex;">
+           <h1 style="width: 100%;">The Ticket Number is <p id="ticketNo1">123</p></h1> 
+        </div>
+    </div>
+    <div class="qm-app">
+        <!-- Content links -->
+        <div class="qm-content-links">
+<a id="cardContentLink" class="qm-content-links__link" href="#addCustomerIcon "></a>
+  <a id="actionPanelContentLink" class="qm-content-links__link" href="#walkDirectBtn"></a>
+</div>
+
+        <!-- Qmatic Header -->
+        <header class="qm-header" id="header">
+    <div class="qm-header__left">
+      <a class="qm-header__home-link" href="/" onclick="return servicePoint.handleHome();">
+        <span id="homeLink" class="qm-action-btn qm-action-btn--only-icon qm-header__home-btn">
+          <i class="qm-action-btn__icon icon-home" aria-hidden="true"></i>
+          <span class="sr-only"></span>
+        </span>
+        <span class="qm-header__brand-logo-container">
+          <img class="qm-header__brand-logo" src="./images/brand_logo_header.png" alt="" role="presentation"/>
+          
+        </span>
+      </a>
+      <span id="appName" class="qm-header__application-name"></span>
+    </div>
+    <div class="qm-header__middle">
+        <div class="qm-header__profile-setting qm-header__profile-setting--branch">
+            <span id="branch" class="qm-header__profile-setting-text"></span>
+            <i class="qm-header__profile-setting-caret icon-caret-right" aria-hidden="true"></i>
+        </div>
+        <div class="qm-header__profile-setting qm-header__profile-setting--workstation">
+            <span id="workstation" class="qm-header__profile-setting-text"></span>
+            <i class="qm-header__profile-setting-caret icon-caret-right" aria-hidden="true"></i>
+        </div>
+        <div class="qm-header__profile-setting qm-header__profile-setting--profile">
+            <span id="profile" class="qm-header__profile-setting-text"></span>
+            <a href="#" id="editCustomerHeader" class="qm-header__edit-profile-settings" onclick="servicePoint.showSettingsWindow();this.blur();"></a>
+        </div>
+    </div>
+    <div class="qm-header__right">
+      <nav class="qm-header__nav">
+        <ul class="qm-header__nav-list">
+            <li class="qm-header__nav-list-item">
+                <a href="#" onclick="util.showModal('alertSettingsWindow');this.blur();" class="qm-action-btn qm-action-btn--only-icon">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                     <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                   </svg>
+                     <span class="sr-only"></span>
+                 </a>
+            </li>
+          <li class="qm-header__nav-list-item">
+            <a href="/help" target="_blank" class="qm-action-btn qm-action-btn--only-icon qm-header__help-btn">
+                <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </a>
+          </li>
+          <li class="qm-header__nav-list-item">
+            <a href="#" id="userName" class="qm-header__user-name" onclick="servicePoint.showSettingsWindow();this.blur();"></a>
+          </li>
+          <li class="qm-header__nav-list-item">
+            <a href="/logout.jsp" onclick="return servicePoint.handleLogoutQES(true, false);" class="qm-action-btn qm-action-btn--only-icon qm-header__logout-btn">
+                <i class="qm-action-btn__icon icon-exit" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+</header>
+
+
+        <!-- Qmatic Main -->
+        <main class="qm-main">
+
+            <!-- Qmatic Main Left -->
+            <div class="qm-main__left">
+                <div class="qm-main__scroll-container">
+                    <div class="qm-card-layout" id="cardContainer" tabindex="-1">
+                        <div id="qm-card-nav" class="qm-hide qm-card-stack">
+                            <div id="closedCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-transparent-card">
+                
+    <header class="qm-transparent-card__header-section">
+        <h1 class="qm-transparent-card__headline" id="closedCardTitle" aria-live="polite"></h1>
+    </header>
+
+    
+                
+                
+    <div class="qm-transparent-card__content-section">
+        <p class="qm-transparent-card__text" id="closedCardSubTitle" aria-live="polite"></p>
+    </div>
+
+ 
+    
+                
+            </div>
+            </div>
+</div>
+                            <div id="visitCard" class="qm-card-scroll">
+    <div class="qm-card-scroll-container">
+        <div class="qm-card-scroll-container__content">
+            <div class="qm-card qm-card--more-than-one">
+                
+    <header class="qm-card__header-section">
+        <div class="qm-card-header">
+            <div class="qm-card-header__top">
+                <h1 class="qm-card-header__headline">
+                    <a href="#" id="linkedCustomerField" class="qm-card-header__customer-name" onclick="customer.editUserPressed(event, 0);this.blur();"></a>
+                    <a href="#" id="amountOfAdditionalCustomers" class="qm-card-header__amount-of-customers" onclick="customer.navigateToCustomerOverview(event);this.blur();"></a>
+                    <span id="ticketNumber" class="qm-card-header__ticket" aria-live="polite" role="alert"></span>
+                </h1>
+                <a href="#" id="addCustomerIcon" class="qm-card-header__add-customer js-add-customer" onclick="customer.addUserPressed(event);this.blur();">
+                    <i class="qm-card-header__add-customer-icon icon-customer-add" aria-hidden="true"></i>
+                    <span class="sr-only"></span>
+                </a>
+            </div>
+            <div id="customFields" class="qm-card-header__custom-fields">
+                <div class="qm-card-header__custom-fields__row">
+                    <span id="customFieldLabel1"></span>
+                    <span id="customfieldvalue1"></span>
+                </div>
+                <div class="qm-card-header__custom-fields__row">
+                    <span id="customFieldLabel2"></span>
+                    <span id="customfieldvalue2"></span>
+                </div>
+                <div class="qm-card-header__custom-fields__row">
+                    <span id="customFieldLabel3"></span>
+                    <span id="customfieldvalue3"></span>
+                </div>
+                <div class="qm-card-header__custom-fields__row">
+                    <span id="customFieldLabel4"></span>
+                    <span id="customfieldvalue4"></span>
+                </div>
+                <div class="qm-card-header__custom-fields__row">
+                    <span id="customFieldLabel5"></span>
+                    <span id="customfieldvalue5"></span>
+                </div>
+            </div>
+            <div class="qm-services">
+                <div class="qm-services__current-service-container">
+
+                    <a href="#" class="qm-context-marketing" id="verticalMessageRow"  onkeydown ="servicePoint.visitCardTabOrder(event)"  >
+                        <i class="qm-context-marketing__icon icon-announce" aria-hidden="true"></i>
+                        <span class="sr-only"></span>
+                    </a>
+
+                    <div class="qm-services__current-services">
+                        <div class="qm-services__current-service-title-container">
+                            <span id="serviceId" class="qm-services__current-service-title"></span>
+                            <a href="#" class="qm-services__add-service js-add-services-btn" id="addMultiServiceLink" onkeydown ="servicePoint.visitCardTabOrder(event)" onclick="servicePoint.addMultiServicePressed();util.moveFocusToCardTop();">
+                                <i class="qm-services__add-service-icon icon-add-circle-solid" aria-hidden="true"></i>
+                                <span class="qm-services__add-service-text" id="addServicesLbl"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="multiServicesComponent" class="qm-services__component" tabindex="-1">
+                    <div id="nextVisitServices" class="qm-services__upcoming-services-container">
+                        <span class="qm-services__label" id="nextServiceLbl"></span>
+                        <div class="qm-services__services-listing">
+                        </div>
+                    </div>
+                    <div id="nextVisitServicesList" class="qm-services__upcoming-services-list">
+                    </div>
+                    <div id="previousVisitServices" class="qm-services__previous-services-container">
+                        <span class="qm-services__label" id="previousServiceLbl"></span>
+                        <div class="qm-services__services-listing">
+                        </div>
+                    </div>
+                    <div id="previousVisitServicesList" class="qm-services__previous-services-list">
+                    </div>
+                    <a href="#" class="qm-services__expand-container-link" id="showServicesLink"  onclick="servicePoint.showCollapsedServices();">
+                                <span class="qm-services__expand-container-link-text" id="showServicesLinkText"></span>
+                                <i class="qm-services__expand-container-link-icon icon-caret-right" aria-hidden="true"></i>
+                            </a>
+                    <a href="#" class="qm-services__expand-container-link" id="hideServicesLink"  onclick="servicePoint.hideCollapsedServices();">
+                                <span class="qm-services__expand-container-link-text" id="hideServicesLinkText"></span>
+                                <i class="qm-services__expand-container-link-icon-larger icon-caret-up" aria-hidden="true"></i>
+                            </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+                
+    <div class="qm-card__content-section qm-card__content-section-flex-grow qm-flex">
+        <!-- Waiting time and transaction time -->
+        <div class="qm-timer">
+                            <div id="transactionTimerSrOnly" class="sr-only" aria-live="assertive" >
+                    00 min 00 seconds
+                    </div>
+            <div class="qm-timer__item" id="waitingTimeContainer">
+                <i class="qm-timer__icon icon-clock-solid" aria-hidden="true"></i>
+                <div class="qm-timer__text">
+                    <span class="qm-timer__label"><span id="visitWaitingTime"></span><span>:</span></span>
+                    <span id="waitingTimeCounter" class="qm-timer__time"></span>
+                </div>
+            </div>
+            <div class="qm-timer__item" id="ServiceTransactionTime">
+                <i class="qm-timer__icon icon-service-solid" aria-hidden="true"></i>
+                <div class="qm-timer__text">
+                    <span class="qm-timer__label"><span id="visitServiceTransactionTime"></span><span>:</span></span>
+                      <span id="serviceTrasactionTimeCount" class="qm-timer__time"></span>
+                      <span id="expectedServiceTransactionTime" class="qm-timer__time qm-timer__time--expected-time"></span>
+                </div>
+            </div>
+            <div class="qm-timer__item">
+                <i class="qm-timer__icon icon-hourglass" aria-hidden="true"></i>
+                <div class="qm-timer__text">
+                    <span class="qm-timer__label"><span id="visitTransactionTime"></span><span>:</span></span>
+                    <span id="countTransactionTime" class="qm-timer__time"  aria-hidden="true"></span>
+                    <span id="expectedTransactionTime" class="qm-timer__time qm-timer__time--expected-time"></span>
+                </div>
+            </div>
+            <div class="qm-timer__item ">
+                <i class="qm-timer__icon icon-customer-solid" aria-hidden="true"></i>
+                <div class="qm-timer__text">
+                    <span class="qm-timer__label"><span >Patient Name : </span><span id="nameSpan"></span></span>
+                </div>
+            </div>
+            <div class="qm-timer__item ">
+                <i class="qm-timer__icon icon-briefcase" aria-hidden="true"></i>
+                <div class="qm-timer__text">
+                    <span class="qm-timer__label"><span >HC Number : </span><span id="hcNOSpan"></span></span>
+                </div>
+            </div>
+            <div class="qm-timer__item ">
+                <i class="qm-timer__icon icon-home" aria-hidden="true"></i>
+                <div class="qm-timer__text">
+                    <span class="qm-timer__label"><span >Nationality : </span><span id="nationalitySpan"></span></span>
+                </div>
+            </div>
+            <div class="qm-timer__item ">
+                <i class="qm-timer__icon icon-queue" aria-hidden="true"></i>
+                <div class="qm-timer__text">
+                    <span class="qm-timer__label"><span >Clinic : </span><span id="clinicSpan"></span></span>
+                </div>
+            </div>            
+            <div class="qm-timer__item ">
+                <i class="qm-timer__icon icon-clock-solid" aria-hidden="true"></i>
+                <div class="qm-timer__text">
+                    <span class="qm-timer__label"><span >Appointment Time : </span><span id="apptTimeSpan"></span></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="resources" class="qm-resources">
+            <div class="qm-resources__row">
+                <span id="primaryResourceLabel"></span>
+                <span id="primaryResourceVal"></span>
+            </div>
+            <div class="qm-resources__row">
+                <span id="secondaryResourceLabel"></span>
+                <span id="secondaryResourceVal"></span>
+            </div>
+        </div>
+
+        <!-- Navigation to screens -->
+        <div class="qm-task-items">
+            <a href="#" class="qm-task-item" id="deliveredServicesModule" onclick="deliveredServices.addDeliveredServicePressed();util.moveFocusToCardTop();">
+                <i class="qm-task-item__icon icon-briefcase" aria-hidden="true"></i>
+                <span class="qm-task-item__text" id="visitAddDsLbl"></span>
+            </a>
+            <a href="#" class="qm-task-item" id="addCustomMarkLink" onclick="customMarks.addCustomMarkPressed();util.moveFocusToCardTop();">
+                <i class="qm-task-item__icon icon-mark" aria-hidden="true"></i>
+                <span class="qm-task-item__text" id="visitAddMarksLbl"></span>
+            </a>
+            <div class="qm-drop-down">
+                <div class="qm-drop-down__component selectOutcome">
+                    <select id="selectOutcome" onchange="javascript:outcome.selectOutcome($(this).val(), $(this).find('option:selected').text()); this.blur();">
+                        <option value="-1" label="default"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- Notes -->
+        <div class="qm-notes js-notes">
+            <div class="qm-notes__edit-container">
+                <div class="qm-notes-layout">
+                    <label id="notesLabel" class="qm-notes__label" for="notesEdit"></label>
+                    <div class="qm-notes__nr-of-character-container">
+                        <span class="qm-notes__characters js-notes-written-characters">0</span>
+                        <span class="qm-notes__characters js-notes-max-characters"></span>
+                    </div>
+                </div>
+                <textarea id="notesEdit" class="qm-notes__textarea" maxlength="255" rows="5" ></textarea>
+                <div class="qm-action-container qm-action-container--align-right">
+                    <span id="notesMaxLengthError" class="qm-notes__error-label" aria-live="assertive"></span>
+                    <button class="qm-btn qm-btn--secondary qm-btn--small js-notes-cancel-btn">
+                        <span class="qm-btn__text"></span>
+                    </button>
+                    <button class="qm-btn qm-btn--primary qm-btn--small js-notes-save-btn">
+                        <span class="qm-btn__text"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="qm-notes__presentation-container">
+                <button class="qm-notes-btn">
+                    <span id="notesMessage" class="qm-notes-btn__text"></span>
+                    <i class="qm-notes-btn__icon icon-edit" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+                
+    <div class="qm-card__footer-section qm-card__footer-section--space-between">
+        <div class="qm-card-action-layout qm-card-action-layout-left">
+            <div class="button-tooltip">
+                <button class="qm-action-btn" id="recallBtn" onclick="servicePoint.recall();this.blur();">
+                    <i class="qm-action-btn__icon icon-recall" aria-hidden="true"></i>
+                    <span class="qm-action-btn__text" title=""></span>
+                </button>
+            </div>
+            <div class="button-tooltip">
+                <button class="qm-action-btn" id="reinsertBtn" onclick="servicePoint.reinsertClicked();this.blur();">
+                    <i class="qm-action-btn__icon icon-recycle-tilted" aria-hidden="true"></i>
+                    <span class="qm-action-btn__text" title=""></span>
+                </button>
+            </div>
+            <div class="button-tooltip">
+                <button class="qm-action-btn" id="transferBtn" onclick="transfer.transferPressed();this.blur();">
+                    <i class="qm-action-btn__icon icon-transfer" aria-hidden="true"></i>
+                    <span class="qm-action-btn__text" title=""></span>
+                </button>
+            </div>
+            <div class="button-tooltip">
+                <button class="qm-action-btn" id="parkBtn" onclick="userPool.parkPressed();this.blur();">
+                    <i class="qm-action-btn__icon icon-pause" aria-hidden="true"></i>
+                    <span class="qm-action-btn__text" title=""></span>
+                </button>
+            </div>
+            <div class="button-tooltip">
+                <button class="qm-action-btn" id="smsBtn" onclick="util.showSmsView();this.blur();">
+                    <i class="qm-action-btn__icon icon-mobile-ticket" aria-hidden="true"></i>
+                    <span class="qm-action-btn__text" title=""></span>
+                </button>
+            </div>
+            <div class="qm-card__footer-section-sms-container" id="smsContainer">
+                <div class="qm-card__footer-section-sms-top-container">
+                <i class="qm-action-btn__icon qm-card__footer-section-phone-icon icon-mobile-ticket"></i>
+                <span class="qm-action-btn__icon qm-card__footer-section-text js-send-sms-text"></span>
+                </div>
+
+                <div class="qm-card__footer-section-sms-bottom-container">
+                <label id="visitSmsLabel"  class="sr-only" for="visitSmsInput"></label>
+                <input id="visitSmsInput" class="qm-card__footer-section-sms-input" type="tel"/>
+                <button id="visitSmsSendBtn"  class="qm-action-btn qm-card__footer-section-send-button js-send-btn" onclick="util.sendSms(); util.hideSmsView();">
+                       <i class="qm-action-btn__icon qm-card__footer-section-send-button-icon icon-next " aria-hidden="true"></i>
+                       <span class="sr-only"  title=""></span>
+                </button>
+                </div>
+                 <span id="visitSmsError" class="qm-label-error js-sms-error" role="alert"></span>
+            </div>
+            <div class="button-tooltip">
+                <button class="qm-action-btn" id="meetingBtn" onclick="util.openMeetingPressed();">
+                    <i class="qm-action-btn__icon icon-video" aria-hidden="true"></i>
+                    <span class="qm-action-btn__text" title=""></span>
+                </button>
+            </div>
+        </div>
+        <div class="qm-card-action-layout qm-card-action-layout-right">
+            <div class="button-tooltip">
+                <button class="qm-action-btn" id="noShowBtn" onclick="servicePoint.noShow();this.blur();" >
+                    <i class="qm-action-btn__icon icon-no-show" aria-hidden="true"></i>
+                    <span class="qm-action-btn__text" title=""></span>
+                </button>
+            </div>
+            <div class="button-tooltip">
+                <button class="qm-action-btn" id="wrapUpBtn" onclick="servicePoint.wrapUpVisit();this.blur();">
+                    <i class="qm-action-btn__icon icon-wrap-up" aria-hidden="true"></i>
+                    <span class="qm-action-btn__text" title=""></span>
+                </button>
+            </div>
+            <div class="button-tooltip">
+                <button class="qm-action-btn" id="endVisitBtn" onclick="servicePoint.checkServicesLeft('endVisitPressed');this.blur();">
+                    <i class="qm-action-btn__icon icon-done-solid" aria-hidden="true"></i>
+                    <span class="qm-action-btn__text" title=""></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+            </div>
+        </div> 
+    </div>
+</div>
+                            <div id="walkInCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card--more-than-one qm-card--justify-top">
+                
+    <header class="qm-card__header-section">
+        <div class="qm-card-header">
+            <h1 class="qm-card-header__headline" id="walkInHeader"></h1>
+            <div class="qm-card-header__sub-heading" id="walkInSubHeader">
+            </div>
+        </div>
+        <div id="walkDirectServices_filter" class="search-filter qm-table-filter">
+            <input type="search" placeholder="" aria-controls="walkDirectServices">
+            <label class="qm-search-filter">
+                <i class="qm-search-filter__icon icon icon-search" aria-hidden="true"></i>
+                <button type="button" class="qm-search-filter__clear-btn js-table-filter-clear-btn">
+                    <i class="qm-search-filter__clear-btn-icon icon icon-close" aria-hidden="true"></i>
+                    <span class="sr-only js-clear-input-label"></span>
+                </button>
+            </label>
+
+        </div>
+    </header>
+
+    
+                
+                
+    <div class="qm-card__content-section">
+         <table id="walkDirectServices">
+            <thead>
+                <tr>
+                    <th class="walkServiceExternalName"></th>
+                    <th class="walkServiceInternalName"></th>
+                    <th class="walkServiceId"></th>
+                    <th class="walkServiceIntDescription"></th>
+                    <th class="walkServiceExtDescription"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+ 
+    
+                
+    <div class="qm-card__footer-section qm-card__footer-section--space-between">
+        <div class="qm-card-action-layout">
+            <button class="qm-action-btn"  id="cancelWalkIn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-close-circle" aria-hidden="true"></i>
+                <span class="qm-action-btn__text close-icon-text" title=""></span>
+            </button>
+        </div>
+        <div class="qm-card-action-layout">
+        </div>
+    </div>
+
+            </div>
+            </div>
+</div>
+                            <div id="inactiveCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card--more-than-one">
+                
+    <header class="qm-card__header-section">
+        <h1 class="qm-card__headline" id="inactiveCardTitle"></h1>
+    </header>
+
+    
+                
+                
+    <div class="qm-card__content-section" >
+        <p class="qm-card__text" id="inactiveCardSubTitle">
+        </p>
+        <p class="sr-only" id="inactiveCardSubTitleSrOnly" aria-live="polite"> </p>
+    </div>
+
+ 
+    
+                
+            </div>
+            </div>
+</div>
+                            <div id="dsCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card--more-than-one qm-card--justify-top">
+                
+    <header class="qm-card__header-section">
+        <div class="qm-card-header">
+            
+    <div class="qm-card-nav">
+        <div class="qm-card-nav__left">
+            <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-back-btn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </button>
+        </div>
+        <div class="qm-card-nav__middle">
+            <h1 id="addDeliveredServices" class="qm-card-nav__title"></h1>
+        </div>
+    </div>
+
+            <div class="qm-card-header__sub-heading"> 
+                <div class="qm-drop-down">
+                    <div class="qm-drop-down__component">
+                        <select id="deliveredServicesFilter" onchange="javascript:deliveredServices.selectDeliveredService($(this).val(), $(this).find('option:selected').text());">
+                            <option value="-1" label="default"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="custom-list-header">
+            <div class="custom-list-header-col" id="dsNameColoumn">
+            </div>
+            <div class="custom-list-header-col" id="outcomeNameColoumn">
+            </div>
+            <div class="custom-list-header-col" id="dsTimeColoumn">
+            </div>
+        </div>
+    </header>
+
+    
+                
+                
+    <div class="qm-card__content-section">
+         <table id="deliveredServices" class="display">
+            <thead>
+                <tr class="table-header__border">
+                    <th class="deliveredServiceId"></th>
+                    <th class="deliveredServiceEventTime"></th>
+                    <th class="deliveredServiceOrigId"></th>
+                    <th class="deliveredServiceName"></th>
+                    <th class="deliveredServiceVisitOutcome"></th>
+                    <th class="deliveredServiceVisitOutcomeNeeded"></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>    
+    
+    <div class="qm-card__back-nav">
+        
+    <button 
+        
+        class="qm-btn qm-tab qm-btn--primary qm-card--back-btn"
+        onclick="cardNavigationController.pop();this.blur()">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+    </div>
+    
+
+ 
+    
+                
+            </div>
+            </div>
+</div>
+                            <div id="transferOptionsCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card--transfer qm-card--more-than-one">
+                
+    <header class="qm-card__header-section">
+        
+    <div class="qm-card-nav">
+        <div class="qm-card-nav__left">
+            <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-back-btn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </button>
+        </div>
+        <div class="qm-card-nav__middle">
+            <h1 id="transferVisitLabel" class="qm-card-nav__title"></h1>
+        </div>
+    </div>
+
+        <span class="qm-card-description"></span>
+    </header>
+
+    
+                
+                
+    <div class="qm-card__content-section qm-card__content-section-flex-grow">
+        <div class="qm-card__content-narrow">
+            <button class="qm-btn qm-btn--secondary qm-btn--full qm-btn--with-icon js-transferToQueue" onclick="transfer.navigateToQueueView();this.blur();">
+                <i class="qm-btn__icon icon-queue" aria-hidden="true"></i>
+                <span class="qm-btn__text"></span>
+            </button>
+            <button class="qm-btn qm-btn--secondary qm-btn--full qm-btn--with-icon js-transferToUserPool" onclick="transfer.navigateToUserPoolView();this.blur();">
+                <i class="qm-btn__icon icon-customer-solid" aria-hidden="true"></i>
+                <span class="qm-btn__text"></span>
+            </button>
+            <button class="qm-btn qm-btn--secondary qm-btn--full qm-btn--with-icon js-transferToCounterPool" onclick="transfer.navigateToCounterPoolView();this.blur();">
+                <i class="qm-btn__icon icon-screen" aria-hidden="true"></i>
+                <span class="qm-btn__text"></span>
+            </button>
+        </div>
+    </div>
+
+ 
+    
+                
+    <div class="qm-card__footer-section qm-card__footer-section--space-between">
+        <div class="qm-card-action-layout">
+            <button class="qm-action-btn js-cancel-btn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-close-circle" aria-hidden="true"></i>
+                <span class="qm-action-btn__text qm-cancel-btn-text"></span>
+            </button>
+        </div>
+    </div>
+
+            </div>
+            </div>
+</div>
+                            <div id="transferQueueCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card qm-card--more-than-one qm-card--justify-top">
+                
+    <header class="qm-card__header-section">
+        
+    <div class="qm-card-nav">
+        <div class="qm-card-nav__left">
+            <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-back-btn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </button>
+        </div>
+        <div class="qm-card-nav__middle">
+            <h1 id="transferVisitToQueueLabel" class="qm-card-nav__title"></h1>
+        </div>
+    </div>
+
+        <span class="qm-card-description"></span>
+        <div id="transferToQueues_filter" class="search-filter qm-table-filter">
+            <input class="js-table-filter-input" id="search-queues-input" name="search-queues-input" type="search" placeholder="" aria-controls="transferToQueues">
+            <label class="qm-search-filter" for="search-queues-input">
+                <i class="qm-search-filter__icon icon icon-search" aria-hidden="true"></i>              
+                <button type="button" class="qm-search-filter__clear-btn js-table-filter-clear-btn">
+                    <i class="qm-search-filter__clear-btn-icon icon icon-close" aria-hidden="true"></i>
+                    <span class="sr-only js-clear-input-label"></span>
+                </button>
+            </label>
+        </div>
+    </header>
+
+    
+                
+                
+    <div class="qm-card__content-section">
+        <table id="transferToQueues" class="qm-table qm-table--small qm-table--no-header js-table-queues">
+            <thead class="qm-table__header">
+                <tr>
+                    <th class="transferQueueName"></th>
+                    <th class="transferQueueToQueueQueueId"></th>
+                    <th class="transferQueueActions"></th>
+                </tr>
+            </thead>
+            <tbody class="qm-table__body" id="transferToQueueTableBody" tabindex="0"></tbody>
+        </table>
+    </div>
+
+ 
+    
+                
+            </div>
+            </div>
+</div>
+                            <div id="transferUserPoolCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card qm-card--more-than-one qm-card--justify-top">
+                
+    <header class="qm-card__header-section">
+        
+    <div class="qm-card-nav">
+        <div class="qm-card-nav__left">
+            <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-back-btn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </button>
+        </div>
+        <div class="qm-card-nav__middle">
+            <h1 id="transferVisitToUserPoolLabel" class="qm-card-nav__title"></h1>
+        </div>
+    </div>
+
+        <span class="qm-card-description"></span>
+        <div id="transferTicketToUserPoolTable_filter" class="search-filter qm-table-filter">
+            <input class="js-table-filter-input" type="search" placeholder="" aria-controls="transferTicketToUserPoolTable" id="transferTicketToUserPoolTableInput">
+            <label class="qm-search-filter">
+                <i class="qm-search-filter__icon icon icon-search" aria-hidden="true"></i>
+                <button type="button" class="qm-search-filter__clear-btn js-table-filter-clear-btn">
+                    <i class="qm-search-filter__clear-btn-icon icon icon-close" aria-hidden="true"></i>
+                    <span class="sr-only js-clear-input-label"></span>
+                </button>
+            </label>
+        </div>
+    </header>
+
+    
+                
+                
+    <div class="qm-card__content-section">
+        <table id="transferTicketToUserPoolTable" class="qm-table qm-table--small qm-table--no-header js-table-user-pool">
+            <thead class="qm-table__header">
+                <tr>
+                    <th class="transferQueueToStaffPoolStaffId"></th>
+                    <th class="transferStaffPoolName"></th>
+                    <th class="transferQueueToStaffPoolStaffLocale"></th>
+                    <th class="transferQueueToStaffPoolStaffDirection"></th>
+                </tr>
+            </thead>
+            <tbody class="qm-table__body" id="transferTicketToUserPoolTableBody" tabindex="0"></tbody>
+        </table>
+    </div>
+
+ 
+    
+                
+            </div>
+            </div>
+</div>
+                            <div id="transferCounterPoolCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card qm-card--more-than-one qm-card--justify-top">
+                
+    <header class="qm-card__header-section">
+        
+    <div class="qm-card-nav">
+        <div class="qm-card-nav__left">
+            <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-back-btn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </button>
+        </div>
+        <div class="qm-card-nav__middle">
+            <h1 id="transferVisitToCounterPoolLabel" class="qm-card-nav__title"></h1>
+        </div>
+    </div>
+
+        <span class="qm-card-description"></span>
+        <div id="transferTicketToCounterPoolTable_filter" class="search-filter qm-table-filter">
+            <input class="js-table-filter-input" type="search" placeholder="" aria-controls="transferTicketToCounterPoolTable" id="transferTicketToCounterPoolTableInput">
+            <label class="qm-search-filter">
+                <i class="qm-search-filter__icon icon icon-search" aria-hidden="true"></i>
+                <button type="button" class="qm-search-filter__clear-btn js-table-filter-clear-btn">
+                    <i class="qm-search-filter__clear-btn-icon icon icon-close" aria-hidden="true"></i>
+                    <span class="sr-only js-clear-input-label"></span>
+                </button>
+            </label>            
+        </div>
+    </header>
+
+    
+                
+                
+    <div class="qm-card__content-section">
+        <table id="transferTicketToCounterPoolTable" class="qm-table qm-table--small qm-table--no-header js-table-counter-pool">
+            <thead class="qm-table__header">
+                <tr>
+                    <th class="transferQueueToStaffPoolStaffId"></th>
+                    <th class="transferStaffPoolName"></th>
+                    <th class="transferQueueToStaffPoolStaffLocale"></th>
+                    <th class="transferQueueToStaffPoolStaffDirection"></th>
+                </tr>
+            </thead>
+            <tbody class="qm-table__body" id="transferTicketToCounterPoolTableBody"   tabindex="0"></tbody>
+        </table>
+    </div>
+
+ 
+    
+                
+            </div>
+            </div>
+</div>
+                            <div id="transferDelayCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card--transfer qm-card--more-than-one">
+                
+  <header class="qm-card__header-section">
+    
+    <div class="qm-card-nav">
+        <div class="qm-card-nav__left">
+            <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-back-btn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </button>
+        </div>
+        <div class="qm-card-nav__middle">
+            <h1 id="transferVisitDelayLabel" class="qm-card-nav__title"></h1>
+        </div>
+    </div>
+
+    <span class="qm-card-description js-transfer-delay-description"></span>
+  </header>
+
+    
+                
+                
+  <div class="qm-card__content-section qm-card__content-section-flex-grow">
+    <div class="qm-card__content-narrow">
+      <button type="button" class="qm-btn qm-btn--secondary qm-btn--full js-transfer-delay-btn js-transfer-delay-shortest" data-delay="5">
+        <span class="qm-btn__text"></span>
+      </button>
+      <button type="button" class="qm-btn qm-btn--secondary qm-btn--full js-transfer-delay-btn js-transfer-delay-medium" data-delay="10">
+        <span class="qm-btn__text"></span>
+      </button>
+      <button type="button" class="qm-btn qm-btn--secondary qm-btn--full js-transfer-delay-btn js-transfer-delay-longest" data-delay="15">
+        <span class="qm-btn__text"></span>
+      </button>
+      <div class="qm-form-field qm-generic-layout qm-generic-layout--nowrap qm-generic-layout--align-bottom qm-mt-4">
+        <div class="qm-generic-layout__adaptive">
+          <label for="customDelayCardInput" class="qm-form-field__label js-label-custom-delay"></label>
+          <div class="qm-form-field__input-container">
+            <input id="customDelayCardInput" class="qm-form-field__text-input js-transfer-delay-input" type="text" pattern="[0-9]+" placeholder="" name="customDelay" maxlength="3">
+            <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+              <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+              <span class="sr-only"></span>
+            </button>
+          </div>
+        </div>
+        <div class="qm-generic-layout__fixed">
+          <button type="button" class="qm-btn qm-btn--primary js-transfer-delay-submit-btn">
+            <span class="qm-btn__text"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+    
+                
+  
+    <div class="qm-card__back-nav">
+        
+    <button 
+        
+        class="qm-btn qm-tab qm-btn--primary qm-card--back-btn"
+        onclick="cardNavigationController.pop();this.blur()">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+    </div>
+    
+
+            </div>
+            </div>
+</div>
+                            <div id="addServicesCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card--more-than-one qm-card--justify-top">
+                
+    <header class="qm-card__header-section">
+        <div class="qm-card-header">
+            
+    <div class="qm-card-nav">
+        <div class="qm-card-nav__left">
+            <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-back-btn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </button>
+        </div>
+        <div class="qm-card-nav__middle">
+            <h1 id="visitCardAddServicesLbl" class="qm-card-nav__title"></h1>
+        </div>
+    </div>
+
+            <div class="qm-card-header__sub-heading"> 
+                <div class="qm-drop-down">
+                    <div class="qm-drop-down__component">
+                        <select id="availableServicesFilter">
+                            <option value="-1" label="default"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-list-header" id="unServedServicesLabel"></div>
+    </header>
+
+    
+                
+                
+    <div class="qm-card__content-section">
+            <div id="unServedServices">
+                    <div class="list">
+                </div>
+            </div>
+    </div>
+    
+    <div class="qm-card__back-nav">
+        
+    <button 
+        
+        class="qm-btn qm-tab qm-btn--primary qm-card--back-btn"
+        onclick="cardNavigationController.pop();this.blur()">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+    </div>
+    
+
+ 
+    
+                
+            </div>
+            </div>
+</div>
+                            <div id="marksCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card--more-than-one qm-card--justify-top">
+                
+    <header class="qm-card__header-section">
+        <div class="qm-card-header">
+            
+    <div class="qm-card-nav">
+        <div class="qm-card-nav__left">
+            <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-back-btn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </button>
+        </div>
+        <div class="qm-card-nav__middle">
+            <h1 id="visitCardAddMarksLbl" class="qm-card-nav__title"></h1>
+        </div>
+    </div>
+
+            <div class="qm-card-header__sub-heading">
+                <div class="qm-drop-down">
+                    <div class="qm-drop-down__component qm-drop-down__select-mark-type" tabindex="0">
+                        <select id="markTypeFilter">
+                            <option value="-1" label="default"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="qm-drop-down">
+                    <div class="qm-drop-down__component qm-drop-down__add-marks">
+                        <div class="main">
+                            <div class="main__top">
+                                <span class="selected-text"></span>
+                                <span class="cross-icon">
+                                    <button class="qm-action-btn qm-action-btn--only-icon">
+                                        <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                        <span class="sr-only">Clear Field</span>
+                                    </button>
+                                </span>
+                            </div>
+
+                            <div class="main__bottom">
+                                <div class="main__bottom-inner-container">
+                                    <div class="main__bottom-inner-container__input">
+                                        <label for="noMarkCount" class="display-text">
+                                            <span id="noOfMarksLabel"></span>
+                                        </label>
+
+                                        <input id="noMarkCount" class="count-input" type="number" min="1" max="10"/>
+                                    </div>
+
+                                    <div class="main__bottom-inner-container__btn">
+                                        
+    <button 
+         id="addMarksToVisitBtn" 
+        class="qm-btn qm-tab qm-btn--secondary"
+        onclick="">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <select id="marksFilter">
+                            <option value="-1" label="default"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-list-header">
+            <div class="custom-list-header-col" id="markNameColumn" scope="col">
+            </div>
+            <div class="custom-list-header-col" id="markTimeColumn" scope="col">
+            </div>
+        </div>
+    </header>
+
+    
+                
+                
+    <div class="qm-card__content-section">
+         <table id="customMarks" class="display">
+            <thead>
+                <tr class="table-header__border">
+                    <th class="customMarkId"></th>
+                    <th class="customMarkEventTime"></th>
+                    <th class="customMarkOrigId"></th>
+                    <th class="customMarkName"></th>
+                    <th class="removeCustomMark"></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="qm-card__back-nav">
+        
+    <button 
+        
+        class="qm-btn qm-tab qm-btn--primary qm-card--back-btn"
+        onclick="cardNavigationController.pop();this.blur()">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+    </div>
+    
+
+ 
+    
+                
+            </div>
+            </div>
+</div>
+                            <div id="addCustomerCard" aria-live="polite" role="dialog" aria-describedby="addCustomerLabel" class="qm-card-scroll">
+    <div class="qm-card-scroll-container">
+        <div class="qm-card-scroll-container__content">
+            <div class="qm-card qm-card--more-than-one">
+                
+    <header class="qm-card__header-section">
+        
+    <div class="qm-card-nav">
+        <div class="qm-card-nav__left">
+            <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-back-btn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </button>
+        </div>
+        <div class="qm-card-nav__middle">
+            <h1 id="addCustomerLabel" class="qm-card-nav__title"></h1>
+        </div>
+    </div>
+
+    </header>
+
+    
+                
+    <div class="qm-card__content-section">
+        <div class="qm-customer">
+            <div class="qm-customer__link-container">
+                <div class="qm-fieldset js-customer-search-view">
+                    <div class="qm-legend">
+                        <h2 class="qm-legend__text js-legend-link-existing-customer"></h2>
+                    </div>
+                    <div class="qm-form-field qm-form-field--search">
+                        <label for="customerInput" class="sr-only js-label-search-customer"></label>
+                        <input id="customerInput" type="search" class="qm-search-input" onblur="customer.escapeSearchMode(event)"/>
+                        <i class="qm-search-input__icon icon-search js-search-input__icon" aria-hidden="true"></i>
+                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field" onblur="customer.escapeSearchMode(event)">
+                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                            <span class="sr-only"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="qm-customer__detail-container">
+                <div id="createCustomerForm" class="js-add-new-customer-form" novalidate>
+                    <div class="qm-fieldset">
+                        <div class="qm-legend">
+                            <h2 class="qm-legend__text js-legend-add-customer"></h2>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-6">
+                                <div class="qm-form-field">
+                                    <div class="qm-generic-layout qm-generic-layout--space-between">
+                                        <label for="createfirstName" class="qm-form-field__label qm-form-field__label--with-req js-label-firstName"></label>
+                                        <span class="qm-form-field__required-text js-label-required"></span>
+                                    </div>
+                                    <div class="qm-form-field__input-container">
+                                        <input autocomplete="chrome-off" id="createfirstName" class="qm-form-field__text-input" aria-describedby="createfirstName_error" type="text" name="firstName" maxlength="50" aria-invalid="false"  aria-required="true" />
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="createfirstName_error" class="qm-form-field__error-label js-form-field-error" role="alert"></span>
+                                </div>
+                            </div>
+                            <div class="qm-form-column-6">
+                                <div class="qm-form-field">
+                                    <div class="qm-generic-layout qm-generic-layout--space-between">
+                                        <label for="createlastName" class="qm-form-field__label qm-form-field__label--with-req js-label-lastName"></label>
+                                        <span class="qm-form-field__required-text js-label-required"></span>
+                                    </div>
+                                    <div class="qm-form-field__input-container">
+                                        <input id="createlastName" autocomplete="chrome-off" class="qm-form-field__text-input" aria-describedby="createlastName_error" type="text" name="lastName" maxlength="50" aria-invalid="false"  aria-required="true" />
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="createlastName_error" class="qm-form-field__error-label js-form-field-error" role="alert"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-12">
+                                <div class="qm-form-field">
+                                    <label for="createemail" class="qm-form-field__label js-label-email"></label>
+                                    <div class="qm-form-field__input-container">
+                                        <input id="createemail" autocomplete="chrome-off" class="qm-form-field__text-input" aria-describedby="createemail_error" type="email" name="email" />
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="createemail_error" class="qm-form-field__error-label js-form-field-error" role="alert"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-6">
+                                <div class="qm-form-field">
+                                    <label for="createphoneNumber" class="qm-form-field__label js-label-phone"></label>
+                                    <div class="qm-form-field__input-container">
+                                        <input id="createphoneNumber" autocomplete="chrome-off" class="qm-form-field__text-input" aria-describedby="createphoneNumber_error" type="tel" name="phoneNumber" />
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="createphoneNumber_error" class="qm-form-field__error-label js-form-field-error" role="alert"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-12">
+                                <p class="qm-form-field__headline js-label-dob"></p>
+                                <div class="qm-form-field qm-form-field--flex qm-form-field--dob">
+                                    <div class="qm-form-field__input-container qm-form-field__input-container--month" id="create-customer-month-container">
+                                        <label for="createdateOfBirthMonth" class="qm-form-field__label"><span class="js-label-month"></span></label>
+                                        <div class="qm-drop-down__component" aria-describedby="createdateOfBirth_error">
+                                            <span class="qm-form-field--dob-sr-text sr-only"></span>
+                                            <select id="createdateOfBirthMonth" tabIndex="-1" aria-describedby="createdateOfBirth_error" class="qm-date-select qm-open-onfocus" data-dob data-dobmonth name="dobMonth">
+                                                <option value="-1" label="default"></option>
+                                            </select>
+                                        </div>
+                                        <div class="qm-drop-down__error invisible-on-load" id="createdateOfBirthMonthErrorMsg">
+
+                                        </div>
+                                    </div>
+                                    <div class="qm-form-field__input-container qm-form-field__input-container--day" id="create-customer-day-container">
+                                        <label for="createdateOfBirthDay" class="qm-form-field__label">
+                                            <span class="js-label-day"></span>
+                                            <span class="qm-form-field__block-label js-label-day-placeholder"></span>
+                                        </label>
+                                        <input id="createdateOfBirthDay" autocomplete="chrome-off" aria-describedby="createdateOfBirth_error" class="qm-form-field__text-input" type="text" data-dob data-dobday name="dobDay" maxlength="2" />
+                                    </div>
+                                    <div class="qm-form-field__input-container qm-form-field__input-container--year" id="create-customer-year-container">
+                                        <label for="createdateOfBirthYear" class="qm-form-field__label">
+                                            <span class="js-label-year"></span>
+                                            <span class="qm-form-field__block-label js-label-year-placeholder"></span>
+                                        </label>
+                                        <input id="createdateOfBirthYear" autocomplete="chrome-off" aria-describedby="createdateOfBirth_error" class="qm-form-field__text-input" type="text" data-dob data-dobyear name="dobYear" maxlength="4" />
+                                    </div>
+                                    <span id="createdateOfBirth_error" class="qm-form-field__error-label qm-form-field__error-label--dob js-form-field-error" role="alert"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-actions">
+                            <div class="qm-generic-layout qm-generic-layout--align-right">
+                                <button type="button" class="qm-btn qm-btn--secondary js-cancel-btn" onclick="event.preventDefault();cardNavigationController.pop();this.blur();">
+                                    <span class="qm-action-btn__text"></span>
+                                </button>
+                                <button type="submit" class="qm-btn qm-btn--primary js-add-customer-save save-btn"  onclick="customer.saveAndLinkCustomer(event);this.blur();">
+                                    <span class="qm-action-btn__text"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Customer details -->
+                <div id="editCustomerForm" class="qm-hide js-edit-customer-form" novalidate>
+                    <div class="qm-fieldset">
+                        <div class="qm-legend">
+                            <h2 class="qm-legend__text js-legend-customer-details"></h2>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-6">
+                                <div class="qm-form-field">
+                                    <div class="qm-generic-layout qm-generic-layout--space-between">
+                                        <label for="editfirstName" class="qm-form-field__label qm-form-field__label--with-req js-label-firstName"></label>
+                                        <span class="qm-form-field__required-text js-label-required"></span>
+                                    </div>
+                                    <div class="qm-form-field__input-container">
+                                        <input id="editfirstName" class="qm-form-field__text-input" aria-describedby="editfirstName_error" type="text" name="firstName" maxlength="50" aria-invalid="false" aria-required="true" />
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="editfirstName_error" class="qm-form-field__error-label js-form-field-error"></span>
+                                </div>
+                            </div>
+                            <div class="qm-form-column-6">
+                                <div class="qm-form-field">
+                                    <div class="qm-generic-layout qm-generic-layout--space-between">
+                                        <label for="editlastName" class="qm-form-field__label qm-form-field__label--with-req js-label-lastName"></label>
+                                        <span class="qm-form-field__required-text js-label-required"></span>
+                                    </div>
+                                    <div class="qm-form-field__input-container">
+                                        <input id="editlastName" class="qm-form-field__text-input" aria-describedby="editlastName_error" type="text" name="lastName" maxlength="50" aria-invalid="false" aria-required="true" />
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="editlastName_error" class="qm-form-field__error-label js-form-field-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-12">
+                                <div class="qm-form-field">
+                                    <label for="editemail" class="qm-form-field__label js-label-email"></label>
+                                    <div class="qm-form-field__input-container">
+                                        <input id="editemail" class="qm-form-field__text-input" aria-describedby="editemail_error" type="email" name="email"/>
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="editemail_error" class="qm-form-field__error-label js-form-field-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-6">
+                                <div class="qm-form-field">
+                                    <label for="editphoneNumber" class="qm-form-field__label js-label-phone"></label>
+                                    <div class="qm-form-field__input-container">
+                                        <input id="editphoneNumber" class="qm-form-field__text-input" aria-describedby="editphoneNumber_error" type="tel" name="phoneNumber" />
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="editphoneNumber_error" class="qm-form-field__error-label js-form-field-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-12">
+                                <p class="qm-form-field__headline js-label-dob"></p>
+                                <div class="qm-form-field qm-form-field--flex qm-form-field--dob">
+                                    <div class="qm-form-field__input-container qm-form-field__input-container--month" id="edit-customer-month-container">
+                                        <label for="editdateOfBirthMonth" class="qm-form-field__label"><span class="js-label-month"></span></label>
+                                        <div class="qm-drop-down__component">
+                                            <span class="qm-form-field--dob-sr-text sr-only"></span>
+                                            <select id="editdateOfBirthMonth" aria-describedby="editdateOfBirth_error" class="qm-date-select qm-open-onfocus" data-dob data-dobmonth name="dobMonth">
+                                                <option value="-1" label="default"></option>
+                                            </select>
+                                        </div>
+                                        <div class="qm-drop-down__error invisible-on-load" id="editdateOfBirthMonthErrorMsg">
+                                        </div>
+                                    </div>
+                                    <div class="qm-form-field__input-container qm-form-field__input-container--day" id="edit-customer-day-container">
+                                        <label for="editdateOfBirthDay" class="qm-form-field__label">
+                                            <span class="js-label-day"></span>
+                                            <span class="qm-form-field__block-label js-label-day-placeholder"></span>
+                                        </label>
+                                        <input id="editdateOfBirthDay" aria-describedby="editdateOfBirth_error" class="qm-form-field__text-input" type="text" data-dob data-dobday name="dobDay" maxlength="2" />
+                                    </div>
+                                    <div class="qm-form-field__input-container qm-form-field__input-container--year" id="edit-customer-year-container">
+                                        <label for="editdateOfBirthYear" class="qm-form-field__label">
+                                            <span class="js-label-year"></span>
+                                            <span class="qm-form-field__block-label js-label-year-placeholder"></span>
+                                        </label>
+                                        <input id="editdateOfBirthYear" aria-describedby="editdateOfBirth_error" class="qm-form-field__text-input" type="text" data-dob data-dobyear name="dobYear" maxlength="4"/>
+                                    </div>
+                                    <span id="editdateOfBirth_error" class="qm-form-field__error-label qm-form-field__error-label--dob js-form-field-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-actions">
+                            <div class="qm-generic-layout qm-generic-layout--align-right">
+                                <button type="button" class="qm-btn qm-btn--secondary js-cancel-btn" onclick="event.preventDefault();cardNavigationController.pop();this.blur();">
+                                    <span class="qm-action-btn__text"></span>
+                                </button>
+                                <button type="submit" class="qm-btn qm-btn--primary js-edit-customer-save save-btn"  onclick="customer.editAndLink(event);this.blur();">
+                                    <span class="qm-action-btn__text"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+                
+            </div>
+        </div> 
+    </div>
+</div>
+                            <div id="editCustomerCard" class="qm-card-scroll">
+    <div class="qm-card-scroll-container">
+        <div class="qm-card-scroll-container__content">
+            <div class="qm-card qm-card--more-than-one">
+                
+    <header class="qm-card__header-section">
+        
+    <div class="qm-card-nav">
+        <div class="qm-card-nav__left">
+            <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-back-btn" onclick="cardNavigationController.pop();this.blur();">
+                <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                <span class="sr-only"></span>
+            </button>
+        </div>
+        <div class="qm-card-nav__middle">
+            <h1 id="editCustomerLabel" class="qm-card-nav__title"></h1>
+        </div>
+    </div>
+
+    </header>
+
+    
+                
+    <div class="qm-card__content-section">
+        <div class="qm-customer">
+            <div class="qm-customer__detail-container">
+                <!-- Customer details -->
+                <div id="editAttachedCustomerForm" class="js-edit-customer-form" novalidate>
+                    <div class="qm-fieldset">
+                        <div class="qm-legend sr-only">
+                            <h2 class="qm-legend__text js-legend-customer-details"></h2>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-6">
+                                <div class="qm-form-field">
+                                    <div class="qm-generic-layout qm-generic-layout--space-between">
+                                        <label for="editAttachedfirstName" class="qm-form-field__label qm-form-field__label--with-req js-label-firstName"></label>
+                                        <span class="qm-form-field__required-text js-label-required"></span>
+                                    </div>
+                                    <div class="qm-form-field__input-container">
+                                        <input id="editAttachedfirstName" autocomplete="chrome-off" class="qm-form-field__text-input" aria-describedby="editAttachedfirstName_error" type="text" name="firstName" maxlength="50" required aria-required="true" />
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="editAttachedfirstName_error" class="qm-form-field__error-label js-form-field-error"></span>
+                                </div>
+                            </div>
+                            <div class="qm-form-column-6">
+                                <div class="qm-form-field">
+                                    <div class="qm-generic-layout qm-generic-layout--space-between">
+                                        <label for="editAttachedlastName" class="qm-form-field__label qm-form-field__label--with-req js-label-lastName"></label>
+                                        <span class="qm-form-field__required-text js-label-required"></span>
+                                    </div>
+                                    <div class="qm-form-field__input-container">
+                                        <input id="editAttachedlastName" autocomplete="chrome-off" class="qm-form-field__text-input" aria-describedby="editAttachedlastName_error" type="text" name="lastName" maxlength="50" required aria-required="true"/>
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="editAttachedlastName_error" class="qm-form-field__error-label js-form-field-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-12">
+                                <div class="qm-form-field">
+                                    <label for="editAttachedemail" class="qm-form-field__label js-label-email"></label>
+                                    <div class="qm-form-field__input-container">
+                                        <input id="editAttachedemail" autocomplete="chrome-off" class="qm-form-field__text-input" aria-describedby="editAttachedemail_error" type="email" name="email"/>
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="editAttachedemail_error" class="qm-form-field__error-label js-form-field-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-6">
+                                <div class="qm-form-field">
+                                    <label for="editAttachedphoneNumber" class="qm-form-field__label js-label-phone"></label>
+                                    <div class="qm-form-field__input-container">
+                                        <input id="editAttachedphoneNumber" autocomplete="chrome-off" class="qm-form-field__text-input" aria-describedby="editAttachedphoneNumber_error" type="tel" name="phoneNumber" />
+                                        <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+                                            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                                            <span class="sr-only"></span>
+                                        </button>
+                                    </div>
+                                    <span id="editAttachedphoneNumber_error" class="qm-form-field__error-label js-form-field-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-row">
+                            <div class="qm-form-column-12">
+                                <p class="qm-form-field__headline js-label-dob"></p>
+                                <div class="qm-form-field qm-form-field--flex qm-form-field--dob">
+                                    <div class="qm-form-field__input-container qm-form-field__input-container--month" id="edit-form-customer-month-container">
+                                        <label for="editAttacheddateOfBirthMonth" class="qm-form-field__label"><span class="qm-form-field--dob-sr-text sr-only"></span><span class="js-label-month"></span></label>
+                                        <div class="qm-drop-down__component">
+                                            <select id="editAttacheddateOfBirthMonth" tabIndex="-1" aria-describedby="editAttacheddateOfBirth_error" class="qm-date-select" data-dob data-dobmonth name="dobMonth">
+                                                <option value="-1" label="default"></option>
+                                            </select>
+                                        </div>
+                                        <div class="qm-drop-down__error invisible-on-load" id="editDobMonthErrorMsg">
+
+                                        </div>
+                                    </div>
+                                    <div class="qm-form-field__input-container qm-form-field__input-container--day" id="edit-form-customer-day-container">
+                                        <label for="editAttacheddateOfBirthDay" class="qm-form-field__label">
+                                            <span class="js-label-day"></span>
+                                            <span class="qm-form-field__block-label js-label-day-placeholder"></span>
+                                        </label>
+                                        <input id="editAttacheddateOfBirthDay" autocomplete="chrome-off" aria-describedby="editAttacheddateOfBirth_error" class="qm-form-field__text-input" type="text" data-dob data-dobday name="dobDay" maxlength="2"/>
+                                    </div>
+                                    <div class="qm-form-field__input-container qm-form-field__input-container--year" id="edit-form-customer-year-container">
+                                        <label for="editAttacheddateOfBirthYear" class="qm-form-field__label">
+                                            <span class="js-label-year"></span>
+                                            <span class="qm-form-field__block-label js-label-year-placeholder"></span>
+                                        </label>
+                                        <input id="editAttacheddateOfBirthYear" autocomplete="chrome-off" aria-describedby="editAttacheddateOfBirth_error" class="qm-form-field__text-input" type="text" data-dob data-dobyear name="dobYear" maxlength="4"/>
+                                    </div>
+                                    <span id="editAttacheddateOfBirth_error" class="qm-form-field__error-label qm-form-field__error-label--dob js-form-field-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="qm-form-actions qm-form-actions--large-margin-top">
+                            <div class="qm-generic-layout qm-generic-layout--align-right">
+                                <button type="button" class="qm-btn qm-btn--secondary js-cancel-btn" onclick="event.preventDefault();cardNavigationController.pop();this.blur();">
+                                    <span class="qm-action-btn__text"></span>
+                                </button>
+                                <button type="submit" class="qm-btn qm-btn--primary js-update-customer-save save-btn"  onclick="customer.editAttachedCustomer(event);this.blur();">
+                                    <span class="qm-action-btn__text"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+                
+            </div>
+        </div> 
+    </div>
+</div>
+                            <div id="customerListCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card qm-card--more-than-one qm-card--justify-top">
+                
+    <header class="qm-card__header-section">
+        <div class="qm-card-nav">
+            <div class="qm-card-nav__middle">
+                <h2 id="customerListLabel" class="qm-card-nav__title"></h2>
+            </div>
+        </div>
+    </header>
+
+    
+                
+                
+    <div class="qm-card__content-section">
+        <div class="qm-customer-overview">
+            <ul class="qm-customer-list js-customer-list">
+                
+            </ul>
+        </div>
+    </div>
+
+ 
+    
+                
+    <div class="qm-card__footer-section">
+        <div class="qm-generic-layout qm-generic-layout--align-right">
+            <button class="qm-btn qm-btn--primary js-card-back" onclick="cardNavigationController.pop();this.blur();">
+                <span class="qm-btn__text"></span>
+            </button>
+        </div>
+    </div>
+
+            </div>
+            </div>
+</div>
+                            <div id="messageCard" class="qm-card-fill">
+<div class="qm-card-fill__inner-container">
+            <div class="qm-card qm-card--more-than-one">
+                
+
+    
+                
+                
+    <div class="qm-card__content-section">
+        <p class="qm-card__text">
+            <span id="cardCustomMessage"></span>
+        </p>
+    </div>
+
+ 
+    
+                
+            </div>
+            </div>
+</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="qm-card-shadow"></div>
+                <!-- Qmatic Action Bar -->
+                <div class="qm-action-bar" id="globalActionPanel" tabindex="-1">
+    <div class="qm-action-bar__left">
+        <div class="button-tooltip">
+            <button class="qm-action-btn qm-action-btn--large" id="walkDirectBtn" name="walkDirectButton"
+            onclick="servicePoint.checkServicesLeft('walkDirectPressed');util.moveFocusToCardTop();">
+                <i class="qm-action-btn__icon icon-walk-in" aria-hidden="true"></i>
+                <span class="qm-action-btn__text" title=""></span>
+            </button>
+        </div>
+    </div>
+    <div class="qm-action-bar__middle">
+        <div class="qm-action-bar__super">
+            <div class="button-tooltip">
+                <button class="qm-action-btn qm-action-btn--huge" name="callNextButton" id="callNextBtn" onclick="servicePoint.checkServicesLeft('callNext');util.moveFocusToCardTop();">
+                    <i class="qm-action-btn__icon icon-call-next-solid" aria-hidden="true"></i>
+                    <span class="qm-action-btn__text" title=""></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="qm-action-bar__right">
+        <div class="button-tooltip">
+            <button class="qm-action-btn qm-action-btn--large" id="closeBtn" name="closeWorkstationButton" onclick="servicePoint.checkServicesLeft('handleClose');this.blur();">
+                <i class="qm-action-btn__icon icon-close-square" aria-hidden="true"></i>
+                <span class="qm-action-btn__text" title=""></span>
+            </button>
+        </div>
+    </div>
+</div>
+            </div>
+
+
+            <!-- Qmatic Main Right -->
+            <div class="qm-main__right">
+                <div class="qm-adjustable-layout">
+                    <div class="qm-adjustable-layout__top">
+                        <!-- My pool -->
+<div id="userPoolModule" class="qm-pool">
+    <span class="qm-pool__label" id="userPoolModuleLabel"></span>
+    <div class="qm-pool__content">
+        <ul id="userPoolList" class="qm-pool__list" aria-labelledby="userPoolModuleLabel">
+            
+        </ul>
+    </div>
+    <button class="qm-action-btn qm-pool__toggle-btn">
+        <i class="qm-action-btn__icon icon-accordion-toggle" aria-hidden="true"></i>
+        <span class="sr-only"></span>
+    </button>
+</div>
+
+<!-- Counter pool id="servicePointPoolModule" -->
+<div id="servicePointPoolModule" class="qm-pool">
+    <span class="qm-pool__label" id="servicePointPoolModuleLabel"></span>
+    <div class="qm-pool__content">
+        <ul id="counterPoolList" class="qm-pool__list" aria-labelledby="servicePointPoolModuleLabel">
+
+        </ul>
+    </div>
+    <button class="qm-action-btn qm-pool__toggle-btn">
+        <i class="qm-action-btn__icon icon-accordion-toggle" aria-hidden="true"></i>
+        <span class="sr-only"></span>
+    </button>
+</div>
+                    </div>
+                    <div class="qm-adjustable-layout__bottom">
+                        <!-- Tabs -->
+<div id="queuesModule">
+    <div class="qm-tabs" id="js-qm-tabs">
+        <div class="qm-tabs__tablist" role="tablist" aria-label="Queues">
+            <button class="qm-tabs__tab"
+              role="tab"
+              aria-selected="true"
+              aria-controls="myQueuesPanel"
+              data-activated="true"
+              onfocus="util.startQueuePoll();util.stopWorkProfilePoll();  "
+              id="myQueuesTab">
+              <span class="qm-tabs__tab-text"></span>
+              <div class="qm-tab-information">
+                  <i class="qm-tab-information__icon icon-customer-solid" aria-hidden="true"></i>
+                  <span class="qm-tab-information__text"></span>
+              </div>
+            </button>
+            <button class="qm-tabs__tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="allQueuesPanel"
+              id="allQueuesTab"
+              data-activated="true"
+              onfocus="util.startQueuePoll(); util.stopWorkProfilePoll();"
+              tabindex="-1">
+              <span class="qm-tabs__tab-text"></span>
+              <div class="qm-tab-information">
+                  <i class="qm-tab-information__icon icon-customer-solid" aria-hidden="true"></i>
+                  <span class="qm-tab-information__text"></span>
+              </div>
+            </button>
+			<button class="qm-tabs__tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="patientCheckInPanel"
+              id="patientCheckInTab"
+              data-activated="true"
+			  style="display:none;"
+              onfocus="util.stopQueuePoll(); util.stopWorkProfilePoll();"
+              tabindex="-1">
+              <span class="qm-tabs__tab-text">Patient Check In</span>
+              <!-- <div class="qm-tab-information">
+                  <i class="qm-tab-information__icon icon-customer-solid" aria-hidden="true"></i>
+                  <span class="qm-tab-information__text"></span>
+              </div> -->
+            </button>
+            <button class="qm-tabs__tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="workProfileVisitsPanel"
+              id="workProfileVisitsTab"
+              tabindex="-1"
+              data-activated="true"
+              onfocus="util.startWorkProfilePoll();util.stopQueuePoll();">
+              <span class="qm-tabs__tab-text"></span>
+              <div class="qm-tab-information">
+                <i class="qm-tab-information__icon icon-customer-solid" aria-hidden="true"></i>
+                <span class="qm-tab-information__text"></span>
+              </div>
+            </button>
+        </div>
+
+        <!-- Tab panels -->
+        <div class="qm-tabs__tab-panel qm-tabs__tab-panel--is-selected" tabindex="0"
+          role="tabpanel"
+          id="myQueuesPanel"
+          aria-labelledby="myQueuesTab">
+          
+<table id="myQueuesTable" class="qm-table">
+    <thead class="qm-table__header">
+        <tr>
+            <th class="myQueueAction"></th>
+            <th class="myQueueName"></th>
+            <th class="myQueueId"></th>
+            <th class="myQueueSLA"></th>
+            <th class="myQueueWaitingTime"></th>
+            <th class="myQueueCustomersWaiting"></th>
+        </tr>
+    </thead>
+    <tbody class="qm-table__body">
+    </tbody>
+</table>
+
+
+        </div>
+        <div class="qm-tabs__tab-panel" tabindex="0"
+          role="tabpanel"
+          id="allQueuesPanel"
+          aria-labelledby="allQueuesTab"
+          hidden>
+          
+<table id="queues" class="qm-table">
+    <thead class="qm-table__header qm-table__header-no-width">
+        <tr>
+            <th class="myQueueAction"></th>
+            <th class="queueId"></th>
+            <th class="queueSLA"></th>
+            <th class="queueWaitingTime"></th>
+            <th class="queueCustomersWaiting"></th>
+            <th class="myQueueCustomersWaiting"></th>
+        </tr>
+    </thead>
+    <tbody class="qm-table__body">
+    </tbody>
+</table>
+
+
+        </div>
+		<div class="qm-tabs__tab-panel" tabindex="0"
+          role="tabpanel"
+          id="patientCheckInPanel"
+		  style="display:none;"
+          aria-labelledby="patientCheckInTab"
+          hidden style="overflow-y:scroll">
+          
+		  
+							<div class="content" ng-app="mainapp" ng-controller="mainctrl" style="max-height:63vh;overflow-y:scroll;" >
+                                <div style="display: flex;width: 100%; align-items: center; vertical-align: middle;flex-direction: column;">
+                                    <label ng-show="commonErrorState" style="color: red;margin:3px;">{{commonError}}</label>
+                                    <div  ng-show="false"  style="display: flex;flex-direction: row; width: 100%;">
+                                        <label for="receptionId_" style="width: 40%;">Select Reception</label>
+                                        <select id="receptionId_" style="width: 60%;" ng-model="selectedReception" ng-change="receptionLock()"
+                                        ng-options="option as option.name for option in optionsReception" >
+                                        </select>
+										
+                                    </div>
+                                </div>
+								<div style="display: flex; flex-direction: column;align-items: center;vertical-align: middle; justify-content: space-between;">
+                                           
+										<table class="qm-table">
+											  <thead>
+												<tr>
+													<td>
+														<label for="hcNo" class="qm-form-field__label"><b>Please Enter The HC Number</b></label>
+													</td>
+													<td>
+														<input type="text" oninput="validHC(this)" name="display" id="display" maxlength="10" 
+											ng-model="txthcnumber" value="{{txthcnumber}}"
+											placeholder="Enter HealthCard Number" ng-model="txthcnumber" class="qm-form-field__text-input" role="textbox" autocomplete="off"/>
+											</td>
+											<td>
+												<input type="button" name="checkAppt" id="checkAppt" class="qm-btn qm-btn--primary" role="button" value="Proceed" ng-click="checkAppointment()"/>
+											</td>
+											
+											<td>
+												<input type="button"  class="qm-btn qm-btn--error" role="button" ng-click="jumpTo('Page1')" value="Clear"/>
+											</td>
+										</tr>
+									  </thead>
+									</table>
+
+                                    <div>
+
+                                    </div class="qm-card" style="width: 100% ;" ng-show >
+
+                                    <div class="qm-card" style="height:auto !important;min-height:100px !important;" align="center"  ng-show="patientName!=''">								
+                                        <table style="height:auto !important;min-height:100px !important;width: 100%;" align="center"  >
+                                            <tbody>
+                                                <tr style="margin: 3px;" >
+                                                    <td style="text-align:left;width:15%;padding:0.3%;" ><span class="qm-services__label">Patient
+                                                            Name</span> </td><td>:</td>
+                                                    <td style="text-align:left;width:84%;padding:0.3%;" colspan="4">{{patientName}}</td>
+                                                </tr>
+                                                <tr style="margin: 3px;">
+                                                    <td style="text-align:left;width:15%;padding:0.3%;"><span class="qm-services__label">HC
+                                                            Number  </span></td><td>:</td>
+                                                    <td style="text-align:left;width:34%;padding:0.3%;"><span
+                                                            class="displayarea">{{patientHcNo}}</span></td>
+                                                    <td style="text-align:left;width:15%;padding:0.3%;"><span class="qm-services__label">Nationality  </span></td><td>:</td>
+                                                    <td style="text-align:left;width:34%;padding:0.3%;"><span
+                                                            class="displayarea">{{patientNationality}}</span></td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot ><!--ng-show="validAppointment && !validAppointmentLate" >-->
+                                                <tr style="margin: 3px;"     >
+                                                    <td style="text-align:left;width:21%;padding:0.3%;"><span class="qm-services__label">Doctor</span>  </td><td>:</td>
+													<td colspan="4" style="text-align:left;width:78%;padding:0.3%;" > {{patientApptDoc}}</td>
+												</tr>
+                                                <tr >
+                                                    
+                                                    <td style="padding:0.3%;"><span class="qm-services__label">Appt Time </span> </td><td>:</td>
+													<td style="padding:0.3%;"> {{patientApptTime}},  </td>
+													<td style="padding:0.3%;"><span class="qm-services__label">Clinic</span>  </td><td>:</td>
+													<td style="padding:0.3%;">{{patientClinic}}</td>
+                                                </tr> 
+												
+                                            </tfoot>
+                                        </table>
+                                    </div>		
+                                    </div>
+                                <div style="margin-top: 6px;height: 3px; border-top: 1px solid rgba(208, 208, 208, 0.404);width: 100%;"></div>
+                                <div id="enterhc" class="page1" style="display: flex; flex-direction: row;align-items: center;vertical-align: middle; justify-content: space-between;" ng-show="showPage(&apos;Page1&apos;)">
+                                    
+									
+									
+									
+                                </div> 
+                                <div id="patientInfo" class="   " style="display: flex; flex-direction: column;align-items: center;vertical-align: middle; justify-content: space-between;" ng-show="showPage(&apos;Page2&apos;)">                                    
+                                    
+                                    <div style="display: flex; flex-direction: row;align-items: center;vertical-align: middle; justify-content: space-around; width: 100%;">
+                                        <input type="button" ng-show="validAppointment && !validAppointmentLate && !validAppointmentEarly" style=" width: auto;" class="qm-btn qm-btn--primary" class="customButton" ng-click="printAppointmentTicket('onTime')" value="Appointment"/>
+                                        <input type="button" ng-show="validAppointment && !validAppointmentLate && validAppointmentEarly" style=" width: auto;" class="qm-btn qm-btn--primary" class="customButton" ng-click="printAppointmentTicket('early')"value="Early Appointment"/>
+                                        <input type="button" ng-show="validAppointment && validAppointmentLate && !validAppointmentEarly" style=" width: auto;" class="qm-btn qm-btn--primary" class="customButton" ng-click="printAppointmentTicket('late')" value="Late Appointment"/>
+                                        <!-- <a style=" width: auto;" class="customButton" ng-click="lateAppointment()" ng-show="validAppointmentLate"><span>Late</span></a> -->
+                                        <input type="button" ng-show="false" style=" width: 24%;" class="qm-btn qm-btn--primary" role="button" ng-click="showOtherService()"   value="Others"/>
+                                        <input type="button" ng-show="!appointExist" style=" width: 24%;" class="qm-btn qm-btn--primary" role="button" ng-click="showWalkInService('Page3')" value="walkIn"/>                                         
+                                        
+                                    </div>                                    
+                                </div>  
+                                <div id="walkIn" class="page3" style="display: flex; flex-direction: column;align-items: center;vertical-align: middle; justify-content: space-around; width: 100%;" ng-show="showPage(&apos;Page3&apos;)" >
+                                    <table style="width: 100%;text-align: left;">                                    
+                                        <tbody >
+                                            <tr ng-repeat="walkInService in walkInServices">
+                                                <td ng-repeat="val in walkInService" style=" padding: 1%;">
+                                                    <!--<div style="display: flex; align-items: center;vertical-align: middle;text-align: center;background-color: #E0E2FF; border-radius: 6px;padding-left:3px;padding-right: 3px; padding-bottom: 6px;cursor: pointer;user-select: none;text-decoration: none;"
+                                                    > -->
+                                                       <input type="button"  class="qm-btn qm-btn--success" role="button"  style="margin-top: 10px;height: 100%;width: 100%;" value="{{val.externalName}}" ng-click="createWalkinVisit(val.id,val.externalName);" />
+                                                    <!-- </div> -->
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>    
+                                </div>  
+                                <div id="walkinClinic" class="page4" ng-show="showPage(&apos;Page4&apos;)">
+                                    <table style="width: 100%;text-align: left;">                                    
+                                        <tbody >
+                                            <tr ng-repeat="walkInService in walkInServices">
+                                                <td ng-repeat="val in walkInService" style=" padding: 1%;">
+                                                    <div style="display: flex; align-items: center;vertical-align: middle;text-align: center;background-color: #E0E2FF; border-radius: 6px;padding-left:3px;padding-right: 3px; padding-bottom: 6px;cursor: pointer;user-select: none;text-decoration: none;"
+                                                    ng-click="createAppointVisit(val.id,val.appLetter,val.starting);">
+                                                        <a  style="margin-top: 10px;height: 100%;width: 100%;" ><span>{{val.externalName}}</span></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>  
+                                </div>                          
+                            </div>
+		  
+			<table id="queues" class="qm-table">
+				<thead class="qm-table__header qm-table__header-no-width">
+					<tr>
+						<th class="myQueueAction"></th>
+						<th class="queueId"></th>
+						<th class="queueSLA"></th>
+						<th class="queueWaitingTime"></th>
+						<th class="queueCustomersWaiting"></th>
+						<th class="myQueueCustomersWaiting"></th>
+					</tr>
+				</thead>
+				<tbody class="qm-table__body">
+				</tbody>
+			</table>
+
+
+        </div>
+        <div class="qm-tabs__tab-panel" tabindex="0"
+          role="tabpanel"
+          id="workProfileVisitsPanel"
+          aria-labelledby="workProfileVisitsTab"
+          hidden>
+          <table id="workProfileVisitsTable" class="qm-table qm-table--simple" aria-labelledby="workProfileVisitsTab">
+  <thead class="qm-table__header">
+    <tr>
+      <th id="ticketVisitId"></th>
+      <th id="ticketTicketId"></th>
+      <th id="ticketNotes"></th>
+      <th id="ticketCustomerName"></th>
+      <th id="ticketActions"></th>
+      <th id="ticketAppointmentTime"></th>
+      <th id="ticketWaitingTime"></th>
+    </tr>
+  </thead>
+  <tbody class="qm-table__body"></tbody>
+</table>
+        </div>
+    </div>
+</div>
+                        <!-- Queue Detail view -->
+<div id="queueDetailView" class="qm-queue-detail">
+    <div class="qm-queue-detail__header">
+        <button class="qm-action-btn qm-action-btn--only-icon qm-queue-detail__back-btn js-queue-detail-back">
+            <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+            <span class="sr-only"></span>
+        </button>
+        <h1 id="ticketListHeader" class="qm-queue-detail__headline"></h1>
+        <span class="qm-tab-information">
+            <i class="qm-tab-information__icon icon-customer-solid" aria-hidden="true"></i>
+            <span class="qm-tab-information__text"></span>
+        </span>
+    </div>
+
+    <div class="qm-queue-detail__content">
+        <table id="tickets" class="qm-table qm-table--simple" aria-labelledby="ticketListHeader">
+            <thead class="qm-table__header">
+                <tr>
+                    <th class="ticketVisitId"></th>
+                    <th class="ticketTicketId"></th>
+                    <th class="ticketNotes"></th>
+                    <th class="ticketCustomerName"></th>
+                    <th class="ticketHCNumber"></th>
+                    <th class="ticketClinic"></th>
+                    <th class="ticketNationality"></th>
+                    <th class="ticketActions"></th>
+                    <th class="ticketPrResource"></th>
+                    <th class="ticketSecResource"></th>
+                    <th class="ticketAppointmentTime"></th>
+                    <th class="ticketWaitingTime"></th>
+                </tr>
+            </thead>
+            <tbody class="qm-table__body"></tbody>
+        </table>
+    </div>
+</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="qm-footer">
+            <div class="qm-footer__content">
+                <p id="footerText" class="qm-footer__text"></p>
+            </div>
+        </footer>
+    </div>
+    <div id="js-popover-overlay" class="qm-popover-overlay"></div>
+    <div class="qm-popovers qm-hide" aria-hidden="true">
+        <div class="qm-popover qm-popover--pool tooltip" tabindex="-1">
+    <div class="tooltip__arrow"></div>
+    
+<div class="qm-popover-action-bar">
+    <div class="qm-popover__layout qm-popover__layout--flex-horizontal">
+        <button class="qm-action-btn qm-action-btn--laying js-popover-call js-pool pool-popover-action-button-call">
+            <i class="qm-action-btn__icon icon-call-next-solid" aria-hidden="true"></i>
+            <span class="qm-action-btn__text"></span>
+        </button>
+        <button class="qm-action-btn qm-popover__close--small js-popover-close pool-popover-action-button-close">
+            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+            <span class="sr-only"></span>
+        </button>
+    </div>
+    <span class="pool-popover-line"> </span>
+    <div class="pool-popover-content">
+        <div class="pool-popover-content-col">
+        <span class="pool-popover-content-row-heading">
+            <span id="popoverPoolActionbarService" class="pool-popover-content-col-heading"></span>
+            <span class="pool-popover-content-services"></span>
+        </span>  
+         <span class="pool-popover-content-col-content"></span>
+        </div>
+
+        <div class="pool-popover-content-col">
+               <span id="popoverPoolActionbarCustomer" class="pool-popover-content-col-heading"></span>
+               <span class="pool-popover-content-col-content"></span>
+        </div>
+    </div>
+</div>
+    <div class="tooltip__inner">
+    </div>
+</div>
+
+<div class="qm-popover qm-popover--queue tooltip" tabindex="-1">
+    <div class="tooltip__arrow"></div>
+    
+<div class="qm-popover-action-bar">
+    <div class="qm-popover__layout qm-popover__layout--flex-horizontal">
+        <button class="qm-action-btn qm-action-btn--laying js-popover-call">
+            <i class="qm-action-btn__icon icon-call-next-solid" aria-hidden="true"></i>
+            <span class="qm-action-btn__text"></span>
+        </button>
+        <button class="qm-action-btn qm-action-btn--laying js-popover-transfer">
+            <i class="qm-action-btn__icon icon-transfer" aria-hidden="true"></i>
+            <span class="qm-action-btn__text"></span>
+        </button>
+        <button class="qm-action-btn qm-action-btn--laying js-popover-sms">
+            <i class="qm-action-btn__icon icon-mobile-ticket" aria-hidden="true"></i>
+            <span class="qm-action-btn__text"></span>
+        </button>
+        <div class="qm-popover-action-bar-send-sms-parent">
+        <div class="qm-popover-action-bar-send-sms-container">
+            <label id="queueSmsLabel"  class="sr-only" for="queueSmsInput"></label>
+            <i class="qm-action-btn__icon qm-popover-action-bar-phone-icon icon-mobile-ticket" aria-hidden="true"></i>
+            <input id="queueSmsInput" class="qm-popover-action-bar-sms-box" type="tel" aria-labelledby="queueSmsLabel"/>
+            <button class="qm-action-btn qm-popover-action-bar-send-btn js-popover-send"></button>
+        </div>
+        <span class="qm-popover-action-bar-send-sms-error" role="alert"></span>
+        </div>
+        <button class="qm-action-btn qm-action-btn--laying js-popover-delete">
+            <i class="qm-action-btn__icon icon-delete" aria-hidden="true"></i>
+            <span class="qm-action-btn__text"></span>
+        </button>
+        <button class="qm-action-btn qm-popover__close--small js-popover-close">
+            <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+            <span class="sr-only"></span>
+        </button>
+    </div>
+</div>
+    <div class="qm-popover-transfer-selection">
+    <div class="qm-popover__layout">
+        <div class="qm-card-nav qm-card-nav--popover">
+            <div class="qm-card-nav__left">
+                <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-popover-back">
+                    <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                    <span class="sr-only"></span>
+                </button>
+            </div>
+            <div class="qm-card-nav__middle">
+                <h1 class="qm-card-nav__title js-popover-transfer-header"></h1>
+            </div>
+            <div class="qm-card-nav__right">
+                <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__close-btn js-popover-close">
+                    <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                    <span class="sr-only"></span>
+                </button>
+            </div>
+        </div>
+    
+        <div class="qm-popover__content qm-popover__content--narrow">
+            <button class="qm-btn qm-btn--secondary qm-btn--full qm-btn--with-icon js-popover-transferToQueue">
+                <i class="qm-btn__icon icon-queue" aria-hidden="true"></i>
+                <span class="qm-btn__text"></span>
+            </button>
+            <button class="qm-btn qm-btn--secondary qm-btn--full qm-btn--with-icon js-popover-transferToUserPool">
+                <i class="qm-btn__icon icon-customer-solid" aria-hidden="true"></i>
+                <span class="qm-btn__text"></span>
+            </button>
+            <button class="qm-btn qm-btn--secondary qm-btn--full qm-btn--with-icon js-popover-transferToCounterPool">
+                <i class="qm-btn__icon icon-screen" aria-hidden="true"></i>
+                <span class="qm-btn__text"></span>
+            </button>
+        </div>
+    </div>
+</div>
+    <div class="qm-popover-queue">
+    <div class="qm-popover__layout">
+        <div class="qm-card-nav qm-card-nav--popover">
+            <div class="qm-card-nav__left">
+                <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-popover-back">
+                    <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                    <span class="sr-only"></span>
+                </button>
+            </div>
+            <div class="qm-card-nav__middle">
+                <h1 class="qm-card-nav__title js-popover-queue-header"></h1>
+            </div>
+            <div class="qm-card-nav__right">
+                <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__close-btn js-popover-close">
+                    <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                    <span class="sr-only"></span>
+                </button>
+            </div>
+        </div>
+    
+        <div class="qm-popover__content">
+            <div class="search-filter qm-table-filter">
+                <input class="js-table-filter-input js-popover-filter-queue" type="search" placeholder="">
+                <label class="qm-search-filter js-popover-filter-queue-container">
+                    <i class="qm-search-filter__icon icon icon-search" aria-hidden="true"></i>
+                    <button type="button" class="qm-search-filter__clear-btn js-popover-filter-queue-clear-btn">
+                        <i class="qm-search-filter__clear-btn-icon icon icon-close" aria-hidden="true"></i>
+                        <span class="sr-only js-clear-input-label"></span>
+                    </button>
+                </label>
+            </div>
+
+            <table class="qm-table qm-table--small js-popover-table-queues">
+                <thead class="qm-table__header">
+                    <tr>
+                        <th class="transferQueueName"></th>
+                        <th class="transferQueueToQueueQueueId"></th>
+                        <th class="transferQueueActions"></th>
+                    </tr>
+                </thead>
+                <tbody class="qm-table__body"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    <div class="qm-popover-user-pool">
+    <div class="qm-popover__layout">
+        <div class="qm-card-nav qm-card-nav--popover">
+            <div class="qm-card-nav__left">
+                <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-popover-back">
+                    <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                    <span class="sr-only"></span>
+                </button>
+            </div>
+            <div class="qm-card-nav__middle">
+                <h1 class="qm-card-nav__title js-popover-user-pool-header"></h1>
+            </div>
+            <div class="qm-card-nav__right">
+                <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__close-btn js-popover-close">
+                    <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                    <span class="sr-only"></span>
+                </button>
+            </div>
+        </div>
+    
+        <div class="qm-popover__content">
+            <div class="search-filter qm-table-filter">
+                <input class="js-table-filter-input js-popover-filter-user-pool" type="search" placeholder="">
+                <label class="qm-search-filter js-popover-filter-user-pool-container">    
+                    <i class="qm-search-filter__icon icon icon-search" aria-hidden="true"></i>
+                    <button type="button" class="qm-search-filter__clear-btn js-popover-filter-user-pool-clear-btn">
+                        <i class="qm-search-filter__clear-btn-icon icon icon-close" aria-hidden="true"></i>
+                        <span class="sr-only js-clear-input-label"></span>
+                    </button>
+                </label>
+            </div>
+            <table class="qm-table qm-table--small js-popover-table-user-pool">
+                <thead class="qm-table__header">
+                    <tr>
+                        <th class="transferQueueToStaffPoolStaffId"></th>
+                        <th class="transferStaffPoolName"></th>
+                        
+                        <th class="transferQueueToStaffPoolStaffLocale"></th>
+                        <th class="transferQueueToStaffPoolStaffDirection"></th>
+                    </tr>
+                </thead>
+                <tbody class="qm-table__body"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    <div class="qm-popover-counter-pool">
+    <div class="qm-popover__layout">
+        <div class="qm-card-nav qm-card-nav--popover">
+            <div class="qm-card-nav__left">
+                <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-popover-back">
+                    <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+                    <span class="sr-only"></span>
+                </button>
+            </div>
+            <div class="qm-card-nav__middle">
+                <h1 class="qm-card-nav__title js-popover-counter-pool-header"></h1>
+            </div>
+            <div class="qm-card-nav__right">
+                <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__close-btn js-popover-close">
+                    <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+                    <span class="sr-only"></span>
+                </button>
+            </div>
+        </div>
+    
+        <div class="qm-popover__content">
+            <div class="search-filter qm-table-filter">
+                <input class="js-table-filter-input js-popover-filter-counter-pool" type="search" placeholder="">
+                <label class="qm-search-filter js-popover-filter-counter-pool-container">
+                    <i class="qm-search-filter__icon icon icon-search" aria-hidden="true"></i>
+                    <button type="button" class="qm-search-filter__clear-btn js-popover-filter-counter-pool-clear-btn">
+                        <i class="qm-search-filter__clear-btn-icon icon icon-close" aria-hidden="true"></i>
+                        <span class="sr-only js-clear-input-label"></span>
+                    </button>
+                </label>
+                
+            </div>
+            <table class="qm-table qm-table--small js-popover-table-counter-pool">
+                <thead class="qm-table__header">
+                    <tr>
+                        <th class="transferServicePointPoolName"></th>
+                        
+                        <th class="transferQueueToServicePointPoolId"></th>
+                        <th class="transferQueueToServicePointPoolUnitId"></th>
+                        <th class="transferServicePointPoolState"></th>
+                        <th class="transferQueueToServicePointPoolParameters"></th>
+                    </tr>
+                </thead>
+                <tbody class="qm-table__body"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    <div class="qm-popover-delayed-transfer">
+  <div class="qm-popover__layout">
+    <div class="qm-card-nav qm-card-nav--popover">
+      <div class="qm-card-nav__left">
+        <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__back-btn js-popover-back">
+          <i class="qm-action-btn__icon icon-caret-left" aria-hidden="true"></i>
+          <span class="sr-only"></span>
+        </button>
+      </div>
+      <div class="qm-card-nav__middle">
+        <h1 class="qm-card-nav__title js-popover-transfer-delay-header"></h1>
+      </div>
+      <div class="qm-card-nav__right">
+        <button class="qm-action-btn qm-action-btn--only-icon qm-card-nav__close-btn js-popover-close">
+          <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+          <span class="sr-only"></span>
+        </button>
+      </div>
+    </div>
+    <div class="qm-popover__content">
+      <span class="qm-popover__description js-transfer-delay-popover-description"></span>
+      <button type="button" class="qm-btn qm-btn--secondary qm-btn--full js-transfer-delay-btn js-transfer-delay-shortest" data-delay="5">
+        <span class="qm-btn__text"></span>
+      </button>
+      <button type="button" class="qm-btn qm-btn--secondary qm-btn--full js-transfer-delay-btn js-transfer-delay-medium" data-delay="10">
+        <span class="qm-btn__text"></span>
+      </button>
+      <button type="button" class="qm-btn qm-btn--secondary qm-btn--full js-transfer-delay-btn js-transfer-delay-longest" data-delay="15">
+        <span class="qm-btn__text"></span>
+      </button>
+      <div class="qm-form-field qm-generic-layout qm-generic-layout--nowrap qm-generic-layout--align-bottom qm-mt-4">
+        <div class="qm-generic-layout__adaptive">
+          <label class="qm-form-field__label js-label-custom-delay"></label>
+          <div class="qm-form-field__input-container">
+            <input class="qm-form-field__text-input js-transfer-delay-input" type="text" pattern="[0-9]+" placeholder="" name="customDelay" maxlength="3">
+            <button type="button" class="qm-action-btn qm-action-btn--only-icon qm-form-field__clear-btn js-clear-field">
+              <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+              <span class="sr-only"></span>
+            </button>
+          </div>
+        </div>
+        <div class="qm-generic-layout__fixed">
+          <button type="button" class="qm-btn qm-btn--primary js-transfer-delay-submit-btn">
+            <span class="qm-btn__text"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="tooltip__inner">
+    </div>
+</div>
+
+<div class="qm-popover qm-popover--context-marketing tooltip" tabindex="-1">
+    <div class="tooltip__arrow"></div>
+    <div class="qm-popover-context-marketing">
+    <p class="qm-popover-context-marketing__text">
+    </p>
+    <button class="qm-action-btn qm-action-btn--only-icon qm-popover-context-marketing__close-btn js-popover-close" tabindex="-1">
+        <i class="qm-action-btn__icon icon-close" aria-hidden="true"></i>
+        <span class="sr-only"></span>
+    </button>
+</div>
+    <div class="tooltip__inner"></div>
+</div>
+
+<div class="qm-popover qm-popover--notes tooltip" tabindex="-1">
+    <div class="tooltip__arrow"></div>
+     <div class="qm-popover-notes qm-popover__layout qm-popover__layout--flex-horizontal">
+    <p class="qm-popover-notes-text">
+    </p>
+</div>
+    <div class="tooltip__inner"></div>
+</div>
+
+<div class="qm-popover qm-popover--multiservices tooltip" tabindex="-1">
+    <div class="tooltip__arrow"></div>
+     <div class="qm-popover-multi-services qm-popover__layout qm-popover__layout--flex-horizontal">
+    <p class="qm-popover-multi-services-text">
+    </p>
+</div>
+    <div class="tooltip__inner"></div>
+</div>
+
+<div class="qm-popover qm-popover--customers tooltip" tabindex="-1">
+    <div class="tooltip__arrow"></div>
+     <div class="qm-popover-customers qm-popover__layout qm-popover__layout--flex-horizontal">
+    <p class="qm-popover-customers-text">
+    </p>
+</div>
+    <div class="tooltip__inner"></div>
+</div>
+
+    </div>
+    <div id="renderedPopovers" class="qm-rendered-popovers"></div>
+    
+    <div id="message" aria-live="polite"></div>
+    <div id="error"></div>
+
+    <div class="ui-widget qm-customer-search-results" id="customerSearchDiv">
+        <table id="customerSearchTable">
+        </table>
+    </div>
+
+
+    <!-- Modal Views -->
+    <div id="qm-modal-nav" class="qm-modal-nav qm-hide">
+        <!-- Imported partials -->
+
+
+<div class="qm-modal qm-hide" id="profile-settings-modal">
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" aria-live="assertive" role="alertdialog" aria-modal="true"
+                           aria-labelledby="workstationSettingsHeader"  
+                           aria-describedby="qm-card__content-section">
+            <h1 class="qm-card__header-section qm-modal-focus-init" id="workstationSettingsHeader"></h1>
+            <div class="qm-card__content-section" id="qm-card__content-section">
+
+                <div class="error-message"></div>
+                <div class="qm-drop-down">
+                    <div id="selectBranchModal" class="qm-drop-down__header text-ellipsis">
+
+                    </div>
+                        <div class="qm-drop-down__component">
+                            <select id="branchListModal" onchange="javascript:servicePoint.selectBranch($(this).val());">
+                                
+                                <option value="-1" label="default"></option>
+                            </select>
+                        </div>
+                    <div class="qm-drop-down__error invisible-on-load" id="branchListModalErrorMsg">
+
+                    </div>
+                </div>
+
+
+                <div class="qm-drop-down">
+                    <div id="selectWorkstationModal" class="qm-drop-down__header text-ellipsis">
+
+                    </div>
+                        <div class="qm-drop-down__component">
+                            <select id="workstationListModal" onchange="javascript:servicePoint.selectWorkstation($(this).val());">
+                                
+                                <option value="-1" label="default"></option>
+                            </select>
+                        </div>
+                    <div class="qm-drop-down__error invisible-on-load" id="workstationListModalErrorMsg">
+
+                    </div>
+                </div>
+
+
+                <div class="qm-drop-down">
+                    <div id="selectProfileModal" class="qm-drop-down__header text-ellipsis">
+
+                    </div>
+                        <div class="qm-drop-down__component">
+                            <select id="prioListModal" onchange="javascript:servicePoint.selectProfile($(this).val());">
+                                
+                                <option value="-1" label="default"></option>
+                            </select>
+                        </div>
+                    <div class="qm-drop-down__error invisible-on-load" id="prioListModalErrorMsg">
+
+                    </div>
+                </div>
+
+                <div id="qmNotificaitonContainer" class="qm-notification-selection">
+                    <label class="qm-checkbox">
+                        <input id="qmNotificationSelection" onchange="util.onToggleNotificationStatus(this)" onclick="this.blur()" class="qm-checkbox__input" type="checkbox">
+                            <span class="qm-checkbox__background qm-checkbox__background__extend"></span>
+                            <i class="qm-checkbox__icon qm-checkbox__icon-extend icon-font" aria-hidden="true"></i>
+                            <label for="qmNotificationSelection" id="selectNotificationModal" class="qm-checkbox__input-text"></label>
+                    </label>
+                </div>
+            </div>
+            <div class="qm-card__footer-section">
+                <div class="qm-generic-layout qm-generic-layout--align-center">
+                
+    <button 
+         id="cancelSettingsBtnModal" 
+        class="qm-btn qm-tab qm-btn--secondary"
+        onclick="servicePoint.cancelConfirmSettings();">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                
+    <button 
+         id="confirmSettingsBtnModal" 
+        class="qm-btn qm-tab qm-btn--primary"
+        onclick="servicePoint.confirmSettings();">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="qm-modal qm-hide" id="no-customers-waiting" aria-live="assertive">
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" role="alertdialog" aria-modal="true"
+                           aria-labelledby="waiting-customer-header"  
+                           aria-describedby="waiting-customer-content">
+            <div id="waiting-customer-header" class="qm-card__header-section">NOOOOOO CUUUUUSTOMEEEEEEEEEERRRRRR WAIIIIIIITNG</div>
+            <div id="waiting-customer-content" class="qm-card__content-section" tabindex="0">
+                Content
+            </div>
+            <div class="qm-card__footer-section"></div>
+        </div>
+    </div>
+</div>
+        <!-- Imported partials -->
+
+
+<div class="qm-modal qm-hide" id="confirm-hijack-modal" aria-live="assertive">
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" role="alertdialog" aria-modal="true"
+                             aria-describedby="hijackMessageContent">
+            <div class="qm-card__header-section js-confirm-counter-highjack-label"></div>
+            <div class="qm-card__content-section qm-modal-focus-init" tabindex="0" id="hijackMessageContent">
+                <span id="hijackMessagePartOne"></span><span id="hijackUser"></span><span id="hijackMessagePartTwo"></span>
+            </div>
+            <div class="qm-card__footer-section">
+                <div class="qm-btns-container">
+                
+    <button 
+         id="hijackYesBtnModal" 
+        class="qm-btn qm-tab qm-btn--primary"
+        onclick="servicePoint.claseAllModals();servicePoint.confirmSettings(false);">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                
+    <button 
+         id="hijackNoBtnModal" 
+        class="qm-btn qm-tab qm-btn--secondary"
+        onclick="servicePoint.closeHijackModal();">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Imported partials -->
+
+
+<div class="qm-modal qm-hide" id="confirm-customer-modal" aria-modal="true" aria-describedby="confirmCustomerPrompt" >
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" id="confirmCustomerModal" >
+            <div class="qm-card__header-section"></div>
+            <div class="qm-card__content-section qm-modal-focus-init" tabindex="0"   >
+                <span id="confirmCustomerPrompt"></span>
+            </div>
+            <div class="qm-card__footer-section">
+                <div class="qm-btns-container" >
+                
+    <button 
+         id="customerArrivedYes" 
+        class="qm-btn qm-tab qm-btn--primary"
+        onclick="servicePoint.customerConfirmed();this.blur();">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                
+    <button 
+         id="customerArrivedNo" 
+        class="qm-btn qm-tab qm-btn--secondary"
+        onclick="servicePoint.customerNotConfirmed();this.blur();">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Imported partials -->
+
+
+<div class="qm-modal qm-hide" id="customer-options-modal" aria-live="assertive">
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" role="alert" aria-modal="true" aria-describedby="customerOptionsText">
+            <div class="qm-card__header-section"></div>
+            <div class="qm-card__content-section">
+                <p class="dialogueMessage">
+                    <span id="customerOptionsText" class="qm-modal-focus-init" >
+                    </span>
+                </p>
+            </div>
+            <div class="qm-card__footer-section qm-card__footer-section--space-between">
+                <div class="qm-card-action-layout">
+                    <button class="qm-action-btn" id="customerOptionBack" onclick="modalNavigationController.pop()">
+                        <i class="qm-action-btn__icon icon-previous" aria-hidden="true"></i>
+                        <span class="qm-action-btn__text" title="Go back"></span>
+                    </button>
+                    <button class="qm-action-btn" id="cancelOptions" onclick="servicePoint.cancelCustomerOptionsDialogue();this.blur();">
+                        <i class="qm-action-btn__icon icon-close-circle" aria-hidden="true"></i>
+                        <span class="qm-action-btn__text qm-cancel-btn-text" title="Cancel"></span>
+                    </button>
+                </div>
+                <div class="qm-card-action-layout">
+                    <button class="qm-action-btn" id="recallOption" onclick="modalNavigationController.popAllModals();servicePoint.recall();this.blur();" >
+                        <i class="qm-action-btn__icon icon-recall" aria-hidden="true"></i>
+                        <span class="qm-action-btn__text" title="Recall"></span>
+                    </button>
+                    <button class="qm-action-btn" id="reinsertOption" onclick="servicePoint.reinsertClicked();this.blur();" >
+                        <i class="qm-action-btn__icon icon-recycle-tilted" aria-hidden="true"></i>
+                        <span class="qm-action-btn__text" title="Recycle"></span>
+                    </button>
+                    <button class="qm-action-btn" id="customerOptionsCallNext" onclick="modalNavigationController.popAllModals();servicePoint.noShow();servicePoint.callNext();this.blur();">
+                        <i class="qm-action-btn__icon icon-call-next-solid" aria-hidden="true"></i>
+                        <span class="qm-action-btn__text" title="Call next"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Imported partials -->
+
+
+<div class="qm-modal qm-hide" id="store-next-modal" aria-live="assertive"  role="alertdialog" aria-modal="true"
+                           aria-describedby="waitingForCustomerPrompt">
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" role="alertdialog" aria-modal="true"
+                           aria-describedby="waitingForCustomerPrompt">
+            <div class="qm-card__header-section qm-modal-focus-init" tabindex="0"></div>
+            <div class="qm-card__content-section">
+                <p id="waitingForCustomerPrompt"></p> 
+            </div>
+            <div class="qm-card__footer-section">
+                <div class="qm-btns-container">
+                
+    <button 
+         id="cancelCall" 
+        class="qm-btn qm-tab qm-btn--secondary"
+        onclick="servicePoint.cancelWaitingForVisit();this.blur();">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Imported partials -->
+
+
+<div class="qm-modal qm-hide" id="visit-in-display-queue-modal" aria-live="assertive">
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" role="alertdialog" aria-modal="true"
+                           aria-describedby="displayQueueSpinnerText">
+            <div class="qm-card__header-section">
+            </div>
+            <div class="qm-card__content-section qm-modal-focus-init" tabindex="0">
+            <span id="displayQueueSpinnerText"></span>
+            </div>
+            <div class="qm-card__footer-section">
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Imported partials -->
+
+
+<div class="qm-modal qm-hide" id="next-services-modal" aria-live="assertive">
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" role="alertdialog" aria-modal="true"
+                           aria-labelledby="nextServicesListHeader"  
+                           aria-describedby="nextServicesList">
+            <div class="qm-card__header-section qm-modal-focus-init" tabindex="0" id="nextServicesListHeader"></div>
+            <div class="qm-card__content-section" >
+                
+                <div id="nextServicesList" class="qm-services-list">
+
+                </div>
+
+            </div>
+            <div class="qm-card__footer-section">
+                <div class="qm-generic-layout qm-generic-layout--align-center">
+                    
+    <button 
+         id="discardConfirmServicesBtn" 
+        class="qm-btn qm-tab qm-btn--secondary"
+        onclick="servicePoint.discardNeededServicesModal();">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                    
+    <button 
+         id="confirmServicesBtn" 
+        class="qm-btn qm-tab qm-btn--primary"
+        onclick="servicePoint.confirmServices();">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Imported partials -->
+
+
+<div class="qm-modal qm-hide" id="logout-window-modal" aria-live="assertive">
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" role="alertdialog" aria-modal="true"
+                             aria-describedby="confirmLogoutMessage">
+            <div class="qm-card__header-section js-confirm-counter-highjack-label qm-modal-focus-init" tabindex="0"></div>
+            <div class="qm-card__content-section" >
+                <span id="confirmLogoutMessage"></span>
+            </div>
+            <div class="qm-card__footer-section">
+                <div class="qm-btns-container">
+                
+    <button 
+         id="confirmLogoutLink" 
+        class="qm-btn qm-tab qm-btn--primary"
+        onclick="servicePoint.handleLogoutQES(false, false);">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                
+    <button 
+         id="cancelLogoutLink" 
+        class="qm-btn qm-tab qm-btn--secondary"
+        onclick="modalNavigationController.pop()">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Imported partials -->
+
+
+<div class="qm-modal qm-hide" id="generic-confirm-modal" aria-live="assertive">
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" role="dialog" aria-modal="true"
+                             aria-describedby="genericConfirmPrompt">
+            <div class="qm-card__header-section qm-modal-focus-init" tabindex="0"></div>
+            <div class="qm-card__content-section">
+                <span id="genericConfirmPrompt"></span>
+            </div>
+            <div class="qm-card__footer-section">
+                <div class="qm-btns-container">
+                
+    <button 
+         id="genericConfirmYes" 
+        class="qm-btn qm-tab qm-btn--primary"
+        onclick="">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                
+    <button 
+         id="genericConfirmNo" 
+        class="qm-btn qm-tab qm-btn--secondary"
+        onclick="">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Imported partials -->
+
+
+<div class="qm-modal qm-hide" id="wrap-up-modal" >
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" aria-modal="true"
+        aria-labelledby="wrapUpText" aria-describedby="wrapUpTimerBoxContent" id="wrapUpTimerWhiteBox">
+            <div class="qm-card__header-section"></div>
+            <div class="qm-card__content-section qm-modal-focus-init" tabindex="0">
+            <span aria-live="assertive">    
+                <p class="dialogueMessage" >
+                    <span id="wrapUpText" >
+                    </span>
+                </p>
+                        <div id="wrapUpTimerSrOnly" class="sr-only wrapUpTimerBox__time">
+                    00 min 00 seconds
+                    </div>
+            </span>
+                <p class="wrapUpTimerBox" id="wrapUpTimerBoxContent"  aria-hidden="true">
+                    <span class="wrapUpTimerBox__text">
+                        <span id="wrapUpTimerText" class="wrapUpTimerBox__text-content"></span>
+                        <span class="wrapUpTimerBox__text-colon">:</span>
+                    </span>
+                    <span id="wrapUpTimerTime" class="wrapUpTimerBox__time" aria-hidden="true">
+                    00:00:00
+                    </span>
+                  
+                </p>
+            </div>
+            <div class="qm-card__footer-section qm-card__footer-section--space-between">
+                <div class="qm-card-action-layout">
+                </div>
+                <div class="qm-card-action-layout">
+                <button class="qm-action-btn" id="wrapUpEndVisitBtn" onclick="servicePoint.checkServicesLeft('endVisitPressed');this.blur();">
+                        <i class="qm-action-btn__icon icon-done-solid" aria-hidden="true"></i>
+                        <span class="qm-action-btn__text" title=""></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Imported partials -->
+
+
+<div class="qm-modal qm-hide" id="auto-close-extend-modal" >
+    <div class="qm-modal__overlay"></div>
+    <div class="qm-modal__layout">
+        <div class="qm-card" aria-modal="true"
+        aria-labelledby="autoCloseExtendDesc" id="autoCloseWhiteBox">
+            <div class="qm-card__header-section"></div>
+            <div class="qm-card__content-section qm-modal-focus-init" tabindex="0">
+            <span >    
+                <p class="dialogueMessage" >
+                    <span id="autoCloseExtendDesc" >
+                    </span>
+                </p>
+                        <div id="autoCloseTimerSrOnly" class="sr-only autoCloseTimerBox__time" aria-live="assertive">
+                            20 seconds
+                    </div>
+            </span>
+                <p class="autoCloseTimerBox" id="autoCloseTimerBoxContent"  aria-hidden="true">
+                    <span class="autoCloseTimerBox__text">
+                        <span id="autoCloseTimerText" class="autoCloseTimerBox__text-content"></span>
+                        <span class="autoCloseTimerBox__text-colon">:</span>
+                    </span>
+                    <span id="autoCloseTimerTime" class="autoCloseTimerBox__time" aria-hidden="true">
+                    20
+                    </span>
+                    <span id="autoCloseTimerSecondsTxt" class="autoCloseTimerBox__seconds" aria-hidden="true">
+                    </span>
+                  
+                </p>
+            </div>
+            <div class="qm-card__footer-section qm-card__footer-section--space-between">
+                <div class="qm-card-action-layout">
+                </div>
+                <div class="qm-card-action-layout">
+                
+    <button 
+         id="autoCloseExtendBtn" 
+        class="qm-btn qm-tab qm-btn--primary"
+        onclick="servicePoint.extendAutoClose();">
+        <span class="qm-btn__text" title="Send"></span>
+    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+
+    <div id="alertSettingsWindow" class="modalPage">
+        <div class="modalOpacityDiv"></div>
+        <div class="modalContainer">
+            <div class="branchForm roundedCorner5">
+                <h2 id="workstationSettingsHeader"><a href="#" class="closeButton" onclick="util.hideModal('alertSettingsWindow');">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                      </svg>
+                </a><h2 style="width: 100%;text-align: center;">Alert Settings.</h2></h2>
+                <table id="settingsTable" class="fiftyFiftyMarg">
+                    <tr>
+                      <td>Alert</td>
+                      <td>
+                        <input type="radio" name="alertEnable" value="true" checked>Yes
+                        <input type="radio" name="alertEnable" value="false">No
+                      </td>
+                      </tr><tr>
+                      <td>Sound</td>
+                      <td>
+                        <input type="radio" name="sound" value="true" checked>Yes
+                        <input type="radio" name="sound" value="false">No
+                      </td>
+                    </tr>
+                    <tr>
+                       <td>Message</td>
+                       <td>
+                        <input type="radio" name="message" value="true" checked>Yes
+                        <input type="radio" name="message" value="false">No
+                       </td>
+                    </tr>
+                    <tr>
+                     <td>No of waiting customers</td>
+                       <td>
+                        <input type="text" name="noWaiting" id="txtNoofWaiting"/>
+                       </td>
+                    </tr>
+                    <tr>
+                     <td>Max waiting time</td>
+                       <td>
+                        <input type="text" name="maxWaiting" id="maxWaitingTime"/>
+                        </td>
+                    </tr>
+                    <tr>
+    <td class="alignCenter" colspan="2">
+    <input id="confirmSettingsBtnModal" class="applySettingsButton" type="button" onclick="updateAlertSettings();" value="Apply settings">
+    </td>
+    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style="display: none;">
+        <audio id="bellAudioElement"  autoplay muted>
+            <source src="./scripts/Bell.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+<script>
+var globPrfileChange=true;
+</script>
+     
+        <!-- build:js scripts/bundle.js -->
+        <!-- New CometD based server-push -->
+        <!-- Per R5, we don't use DWR for server push of events anymore -->
+
+        <script src="scripts/vendor/jquery-3.3.1.js?t=1721298661346"></script>
+        <script src="scripts/vendor/jquery-ui.js?t=1721298661346"></script>
+
+        <script src="scripts/vendor/lodash.min.js?t=1721298661346"></script>
+        <script src="scripts/vendor/mousetrap.js?t=1721298661346"></script>
+
+        <script src="scripts/vendor/popper.1.13.0.js?t=1721298661346"></script>
+        <script src="scripts/vendor/tooltip.1.1.7.js?t=1721298661346"></script>
+        <script src="scripts/vendor/chosen.jquery.js?t=1721298661346"></script>
+
+        <script src="scripts/cometd/cometd.js?t=1721298661346"></script>
+        <script src="scripts/cometd/jquery.cometd.js?t=1721298661346"></script>
+        <script src="scripts/cometd/qevents_cometd_v2.js?t=1721298661346"></script>
+
+        <script src="scripts/core/compatible-helper.js?t=1721298661346"></script>
+        <script src="scripts/core/init.js?t=1721298661346"></script>
+        <script src="scripts/core/util.js?t=1721298661346"></script>
+        <script src="scripts/core/customer.js?t=1721298661346"></script>
+        <script src="scripts/core/deliveredServices.js?t=1721298661346"></script>
+        <script src="scripts/core/customMarks.js?t=1721298661346"></script>
+        <script src="scripts/core/outcomes.js?t=1721298661346"></script>
+        <script src="scripts/core/servicePointPool.js?t=1721298661346"></script>
+        <script src="scripts/core/userPool.js?t=1721298661346"></script>
+        <script src="scripts/core/transfer.js?t=1721298661346"></script>
+        <script src="scripts/core/queues.js?t=1721298661346"></script>
+        <!--<script src="scripts/core/projectedVisits.js"></script> -->
+        <script src="scripts/core/chat.js?t=1721298661346"></script>
+        <script src="scripts/core/jquery/jquery.i18n.properties.js?t=1721298661346"></script>
+        <script src="scripts/core/i18n-util.js?t=1721298661346"></script>
+        <script src="scripts/core/jquery/jquery.countdown.js?t=1721298661346"></script>
+        <script src="scripts/core/jquery/jquery.dataTables.js?t=1721298661346"></script>
+        <script src="scripts/core/jquery/dataTables.keyTable.min.js?t=1721298661346"></script>
+        <script src="scripts/core/i18n.js?t=1721298661346"></script>
+        <script src="scripts/core/sessvars.js?t=1721298661346"></script>
+        <script src="scripts/core/ieCache.js?t=1721298661346"></script>
+        <script src="scripts/core/ieService.js?t=1721298661346"></script>
+        <script src="scripts/core/settings.js?t=1721298661346"></script>
+
+        
+        <script src="scripts/main.js?t=1721298661346"></script>
+        <script src="scripts/utils/index.js?t=1721298661346"></script>
+
+        <script src="scripts/components/index.js?t=1721298661346"></script>
+        <script src="scripts/components/BaseComponent.js?t=1721298661346"></script>
+
+        <script src="scripts/components/popover/PopoverController.js?t=1721298661346"></script>
+        <script src="scripts/components/popover/index.js?t=1721298661346"></script>
+        <script src="scripts/components/popover/poolPopover/index.js?t=1721298661346"></script>
+        <script src="scripts/components/popover/userPoolPopover/index.js?t=1721298661346"></script>
+        <script src="scripts/components/popover/counterPoolPopover/index.js?t=1721298661346"></script>
+        <script src="scripts/components/popover/queuePopover/index.js?t=1721298661346"></script>
+        <script src="scripts/components/popover/contextMarketingPopover/index.js?t=1721298661346"></script>
+
+        <script src="scripts/components/dropdown/index.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/BaseDropdownComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/AddMarksDropdownComponent.js?t=1721298661346?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/AddMarksDropdownComponent.js"></script>
+        <script src="scripts/components/dropdown/branchSelection/branchSelection.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/counterSelection/counterSelection.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/profileSelection/profileSelection.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/multiMarkSelection/multiMarkSelection.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/markTypeSelection/markTypeSelection.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/deliveredServicesSelection/deliveredServicesSelection.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/singleOutcomeSelection/singleOutcomeSelection.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/addServiceSelection/addServiceSelection.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/createDobSelection/createDobSelection.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/editDobSelection/editDobSelection.js?t=1721298661346"></script>
+        <script src="scripts/components/dropdown/editAttachedDobSelection/editAttachedDobSelection.js?t=1721298661346"></script>
+
+        <script src="scripts/components/tableScroll/index.js?t=1721298661346"></script>
+
+        <script src="scripts/components/NavView.js?t=1721298661346"></script>
+        <script src="scripts/components/NavController.js?t=1721298661346"></script>
+
+        <script src="scripts/components/modal/index.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/BaseModalComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/WrapUpModalComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/GenericConfirmModal.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/ProfileSettingsModal.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/NextServicesModal.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/HijackModal.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/profileSettings/profileSettings.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/noCustomersWaiting/noCustomersWaiting.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/hijack/hijack.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/confirmCustomer/confirmCustomer.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/customerOptions/customerOptions.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/storeNext/storeNext.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/visitInDisplayQueue/visitInDisplayQueue.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/nextServices/nextServices.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/logoutWindow/logoutWindow.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/wrapUp/wrapUp.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/autoCloseExtendModalComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/modal/autoCloseExtend/autoCloseExtend.js?t=1721298661346"></script>
+
+        <script src="scripts/components/queue/index.js?t=1721298661346"></script>
+        <script src="scripts/components/notes/index.js?t=1721298661346"></script>
+
+        <script src="scripts/components/header/HeaderComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/header/applicationHeader/header.js?t=1721298661346"></script>
+
+
+        <script src="scripts/components/tooltip/index.js?t=1721298661346"></script>
+
+        <script src="scripts/components/card/index.js?t=1721298661346"></script>
+        <script src="scripts/components/card/CardBaseComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/card/WalkInCardComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/card/VisitCardComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/card/TransferCardComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/card/TransferDelayCardComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/card/CustomerCardComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/card/CustomerListCardComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/card/MarksCardComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/card/visitCard/visitCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/closeCard/closeCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/inactiveCard/inactiveCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/walkInCard/walkInCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/deliveredServicesCard/deliveredServicesCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/addServicesCard/addServicesCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/addCustomerCard/addCustomerCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/editCustomerCard/editCustomerCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/customerListCard/customerListCard.js?t=1721298661346"></script>
+
+        <script src="scripts/components/card/transferCards/transferOptionsCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/transferCards/transferQueueCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/transferCards/transferUserPoolCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/transferCards/transferCounterPoolCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/transferCards/transferDelayCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/marksCard/marksCard.js?t=1721298661346"></script>
+        <script src="scripts/components/card/MessageCardComponent.js?t=1721298661346"></script>
+        <script src="scripts/components/card/messageCard/messageCard.js?t=1721298661346"></script>
+
+		<!-- widget Client & connector client to create visit with widget modules-->
+		<script type="text/javascript" src="/wookie/dwr/util.js"></script>
+        <script type="text/javascript" src="/wookie/dwr/engine.js"></script>
+        <script type="text/javascript" src="/wookie/dwr/interface/WidgetImpl.js"></script>
+        <script type="text/javascript" src="/wookie/shared/js/wookie-wrapper.js"></script>
+        <script type="text/javascript" src="/wookie/features/orchestra-widget/OpenAjaxManagedHub-all.js"></script>
+        <script type="text/javascript" src="/wookie/features/orchestra-widget/widget-client.js"></script>
+        <script type="text/javascript" src="/wookie/features/orchestra-connector/rest-api.js"></script>
+        <script type="text/javascript" src="/wookie/features/orchestra-connector/connector-client.js"></script>
+
+		<!--for appointment visit-->
+            <script type="text/javascript" src="scripts/appt/angular.js"></script>
+            <script type="text/javascript" src="scripts/appt/lodash.min.js"></script>
+            <script type="text/javascript" src="scripts/appt/BnJRoomsMapping.js"></script>
+            <script type="text/javascript" src="scripts/appt/appointmentTicket.js"></script>
+        <!--end-->
+        <script src="scripts/components/tabs-component.js?t=1721298661346"></script>
+        <script src="scripts/core/script.js?t=1721298661347"></script>
+        <!-- endbuild -->
+
+        <script type="text/javascript" src="scripts/jquery.cookie.js"></script>
+	    <script type="text/javascript" src="scripts/jquery.playSound.js"></script>
+		<script type="text/javascript" src="scripts/desktop-notify.js"></script>
+
+
+    <script>
+        var audioElement_1=document.getElementById('bellAudioElement');
+            $(document).ready(function() {
+                // If we ever, ever, end up with a 401, we are either timedout due to inactivity
+                // or just plain evil. Anyway we should be logged out.
+                $.ajaxSetup( {
+                    cache : false,
+                    statusCode : {
+                        401: function() {
+                            location.href = "/logout.jsp";
+                        }
+                    }
+                });
+
+                init.init();
+
+                
+                audioElement_1.muted = false;
+
+                //set default values to alert
+                try
+				{
+					var noofWaiting = $.cookie("noofwaiting") == undefined ? '1':$.cookie("noofwaiting");
+					$("#txtNoofWaiting").val(noofWaiting);
+					var maxWaitTime = $.cookie("maxWaitingTime") == undefined ? '60':$.cookie("maxWaitingTime");
+					$("#maxWaitingTime").val(maxWaitTime);
+					var alertEnable = $.cookie("alertEnable") == undefined ? true:$.cookie("alertEnable");
+					$('input[name=alertEnable][value='+alertEnable+']').prop("checked",true);
+					var sound = $.cookie("sound") == undefined ? true:$.cookie("sound");
+					$('input[name=sound][value='+sound+']').prop("checked",true);
+					var message = $.cookie("message") == undefined ? true:$.cookie("message");
+					$('input[name=message][value='+message+']').prop("checked",true);
+					window.Notification.requestPermission();
+				}catch(ex)
+				{
+					console.log("Browser not supported");
+				}
+
+                // Temporary toggle of pools - Move this to a better location and make better implementaion
+                $('.qm-pool__toggle-btn').on('click', function (e) {
+                    $(this).closest('.qm-pool').toggleClass('qm-pool--is-open');
+                });
+
+                // TABS
+                var tabConfig = {
+                    tabComponentId: 'js-qm-tabs'
+                };
+
+                window.$Qmatic.components.tabs(tabConfig);
+			});
+
+            //update alert settings
+            function updateAlertSettings()
+			{
+			//debugger;
+				var cookieStatus = navigator.cookieEnabled;
+				if(cookieStatus)
+				{
+					$.cookie("noofwaiting",$("#txtNoofWaiting").val(),{expires:365});
+					$.cookie("maxWaitingTime",$("#maxWaitingTime").val(),{expires:365});
+					$.cookie("alertEnable",$("input[name=alertEnable]:checked").val(),{expires:365});
+					$.cookie("sound",$("input[name=sound]:checked").val(),{expires:365});
+					$.cookie("message",$("input[name=message]:checked").val(),{expires:365});
+					util.hideModal('alertSettingsWindow');
+				}else
+				{
+					util.hideModal('alertSettingsWindow');
+					alert("Cookie is not supported in your browser! Please enable.");
+				}
+			}
+
+            Audio.prototype.play=(function(play){
+                return function(){
+                    var audio=this,
+                    args=arguments,
+                    promise=play.apply(audio,args);
+                    if(promise !==undefined){
+                        promise.catch(_=>{
+                            var el =document.createElement("button");
+                            el.innerHTML="play";
+                            el.addEventListener("click",function(){play.apply(audio,args);});
+                            this.parentNode.insertBefore(el,this.nextSibling)
+                        });
+                    }
+                };
+            })(Audio.prototype.play);
+
+
+        </script>
+</body>
+
+</html>

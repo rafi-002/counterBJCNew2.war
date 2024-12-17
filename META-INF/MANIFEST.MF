@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Product-Name: QMATIC Orchestra
+Release-Name: R5.4
+Build-Version: 2.4.0.292
+Build-Date: 2016-01-22
+Build-Commit: 8de3a75d901068a419b7
+Built-By: jenkins
+
